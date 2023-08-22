@@ -1,0 +1,28 @@
+{
+	// "name": "",
+	//
+	// devcontainer Build Configuration ===
+	"dockerComposeFile": "compose.yaml",
+	"service": "htmx_go",
+	"workspaceFolder": "/workspaces",
+	// ===
+	//
+	// devcontainer Environment Configuration ===
+	"remoteUser": "vscode",
+	// "forwardPorts": [], vscode forwards the ports automatically anyways
+    // List of available features: https://github.com/devcontainers/features/tree/main/src
+	"features": {
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"rangav.vscode-thunder-client",
+				"otovo-oss.htmx-tags"
+			],
+			"settings": {}
+		}
+	},
+	// ===
+	"postCreateCommand": "echo 'Hello devcontainer'"
+}
+

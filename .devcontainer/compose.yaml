@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  htmx_go:
+    container_name: dev
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+    environment:
+      - ENV=${ENV}
+      - PORT=${PORT}
+      - GH_PAT=${GH_PAT}
+
+    volumes:
+      - ..:/workspaces:cached
+
+    command: sleep infinity
