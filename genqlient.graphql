@@ -1,0 +1,21 @@
+query GetIssues { 
+  repository(owner: "railwayapp", name: "cli"){
+    issues(first: 30, states: [OPEN], orderBy: {field: CREATED_AT, direction: DESC}){
+      edges{
+        node{
+          title
+          number
+          createdAt
+          author{
+            login
+          }
+          labels(first: 5){
+            nodes{
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

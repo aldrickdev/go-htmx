@@ -10,11 +10,11 @@ init:
 	go mod tidy
 
 # Devcontainer Commands
-dc_up:
+dc-up:
 	devcontainer up
 
-dc_up_r:
+dc-up-r:
 	devcontainer up --remove-existing-container
 
-dc_open:
+dc-open:
 	devcontainer open
