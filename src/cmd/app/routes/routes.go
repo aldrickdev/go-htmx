@@ -1,10 +1,12 @@
 package routes
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"net/http"
 
+	"github.com/aldrickdev/go-htmx/cmd/app/api"
 	"github.com/aldrickdev/go-htmx/cmd/app/templates"
 	"github.com/gin-gonic/gin"
 )
@@ -33,32 +35,67 @@ func GetRepoIssues(c *gin.Context) {
 	}
 
 	// Get Issue Data
-	issue1 := issue{
-		Number: "001",
-		Title:  "First Issue",
-		Author: "Aldrick",
-		Labels: []string{
-			"Beginner Friendly",
-			"Bug",
-		},
-	}
-	issue2 := issue{
-		Number: "002",
-		Title:  "Second Issue",
-		Author: "Aldrick",
-		Labels: []string{
-			"Fix",
-		},
-	}
+	// issue1 := issue{
+	// 	Number: "001",
+	// 	Title:  "First Issue",
+	// 	Author: "Aldrick",
+	// 	Labels: []string{
+	// 		"Beginner Friendly",
+	// 		"Bug",
+	// 	},
+	// }
+	// issue2 := issue{
+	// 	Number: "002",
+	// 	Title:  "Second Issue",
+	// 	Author: "Aldrick",
+	// 	Labels: []string{
+	// 		"Fix",
+	// 	},
+	// }
 
-	data := resultsStruct{
+	// data := resultsStruct{
+	// 	RepositoryName: repoName,
+	// 	Issues: []issue{
+	// 		issue1, issue2,
+	// 	},
+	// }
+
+	gqlClient := api.GetClient()
+	apiData, err := api.GetIssues(context.Background(), gqlClient)
+	if err != nil {
+		panic(err)
+	}
+	repository := apiData.GetRepository()
+	issues := repository.GetIssues()
+	issueEdges := issues.GetEdges()
+
+	templateData := resultsStruct{
 		RepositoryName: repoName,
-		Issues: []issue{
-			issue1, issue2,
-		},
 	}
 
-	err := templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, data)
+	for _, edge := range issueEdges {
+		node := edge.GetNode()
+		Number := fmt.Sprint(node.GetNumber())
+		Title := node.GetTitle()
+		Author := node.GetAuthor().GetLogin()
+
+		var Labels []string
+		for _, l := range node.GetLabels().Nodes {
+			Labels = append(Labels, l.GetName())
+		}
+
+		templateData.Issues = append(
+			templateData.Issues,
+			issue{
+				Number,
+				Title,
+				Author,
+				Labels,
+			},
+		)
+	}
+
+	err = templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, templateData)
 	if err != nil {
 		fmt.Print(err)
 	}
