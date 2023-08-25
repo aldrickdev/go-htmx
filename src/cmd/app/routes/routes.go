@@ -1,10 +1,11 @@
-package app
+package routes
 
 import (
 	"fmt"
 	"io"
 	"net/http"
 
+	"github.com/aldrickdev/go-htmx/cmd/app/templates"
 	"github.com/gin-gonic/gin"
 )
 
@@ -57,14 +58,14 @@ func GetRepoIssues(c *gin.Context) {
 		},
 	}
 
-	err := ApplicationTemplates.ExecuteTemplate(c.Writer, IndexPage, data)
+	err := templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, data)
 	if err != nil {
 		fmt.Print(err)
 	}
 }
 
 func Index(c *gin.Context) {
-	err := ApplicationTemplates.ExecuteTemplate(c.Writer, IndexPage, nil)
+	err := templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, nil)
 	if err != nil {
 		panic(err)
 	}

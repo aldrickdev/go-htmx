@@ -5,8 +5,9 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/aldrickdev/go-htmx/pkg/app"
-	"github.com/aldrickdev/go-htmx/pkg/utils"
+	"github.com/aldrickdev/go-htmx/cmd/app/routes"
+	"github.com/aldrickdev/go-htmx/cmd/app/templates"
+	"github.com/aldrickdev/go-htmx/cmd/app/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -37,19 +38,16 @@ func init() {
 
 func main() {
 	g := gin.Default()
-
-	app.ApplicationTemplates = template.Must(
+	templates.ApplicationTemplates = template.Must(
 		template.ParseFiles(
-			fmt.Sprintf("%s%s", app.PagesLocation, app.IndexPage),
-			fmt.Sprintf("%s%s", app.ComponentsLocation, app.ResultsComponent),
+			fmt.Sprintf("%s%s", templates.PagesLocation, templates.IndexPage),
+			fmt.Sprintf("%s%s", templates.ComponentsLocation, templates.ResultsComponent),
 		),
 	)
 
-	fmt.Println(app.ApplicationTemplates.DefinedTemplates())
-
-	g.GET("/", app.Index)
-	g.GET("/ping", app.Ping)
-	g.GET("/issues", app.GetRepoIssues)
+	g.GET("/", routes.Index)
+	g.GET("/ping", routes.Ping)
+	g.GET("/issues", routes.GetRepoIssues)
 
 	err := g.Run(PORT)
 	if err != nil {
