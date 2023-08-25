@@ -13,8 +13,8 @@
 <body hx-boost="true">
     <form action="/issues" method="get">
         <legend>Get Repository Issues</legend>
-        <label for="repository">Repository Name</label>
-        <input type="text" name="repository" placeholder="Enter repo name..."
+        <label for="link">Repository Lin</label>
+        <input type="text" name="link" placeholder="http://github.com/railway/cli"
             value="{{if .RepositoryName}}{{.RepositoryName}}{{end}}">
 
         <button>Search</button>

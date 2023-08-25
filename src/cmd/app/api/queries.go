@@ -428,10 +428,22 @@ type GetIssuesResponse struct {
 // GetRepository returns GetIssuesResponse.Repository, and is useful for accessing the field via an interface.
 func (v *GetIssuesResponse) GetRepository() GetIssuesRepository { return v.Repository }
 
+// __GetIssuesInput is used internally by genqlient
+type __GetIssuesInput struct {
+	Owner    string `json:"owner"`
+	RepoName string `json:"repoName"`
+}
+
+// GetOwner returns __GetIssuesInput.Owner, and is useful for accessing the field via an interface.
+func (v *__GetIssuesInput) GetOwner() string { return v.Owner }
+
+// GetRepoName returns __GetIssuesInput.RepoName, and is useful for accessing the field via an interface.
+func (v *__GetIssuesInput) GetRepoName() string { return v.RepoName }
+
 // The query or mutation executed by GetIssues.
 const GetIssues_Operation = `
-query GetIssues {
-	repository(owner: "railwayapp", name: "cli") {
+query GetIssues ($owner: String!, $repoName: String!) {
+	repository(owner: $owner, name: $repoName) {
 		issues(first: 30, states: [OPEN], orderBy: {field:CREATED_AT,direction:DESC}) {
 			edges {
 				node {
@@ -457,10 +469,16 @@ query GetIssues {
 func GetIssues(
 	ctx context.Context,
 	client graphql.Client,
+	owner string,
+	repoName string,
 ) (*GetIssuesResponse, error) {
 	req := &graphql.Request{
 		OpName: "GetIssues",
 		Query:  GetIssues_Operation,
+		Variables: &__GetIssuesInput{
+			Owner:    owner,
+			RepoName: repoName,
+		},
 	}
 	var err error
 

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/aldrickdev/go-htmx/cmd/app/api"
 	"github.com/aldrickdev/go-htmx/cmd/app/templates"
@@ -20,8 +21,31 @@ func Ping(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "pong"})
 }
 
+func extractOwnerRepo(input string) (string, string, error) {
+	splitLink := strings.Split(input, "/")
+	splitLinkLen := len(splitLink)
+
+	if splitLinkLen < 2 || splitLinkLen > 5 {
+		return "", "", fmt.Errorf("invalid link provided")
+	}
+
+	extracted := splitLink[splitLinkLen-2:]
+
+	return extracted[0], extracted[1], nil
+}
+
 func GetRepoIssues(c *gin.Context) {
-	repoName := c.Query("repository")
+	// Supported input styles:
+	// http://github.com/railwayapp/cli
+	// github.com/railwayapp/cli
+	// railwayapp/cli
+
+	link := c.Query("link")
+	owner, repoName, err := extractOwnerRepo(link)
+	if err != nil {
+		// TODO: generate an error for the html
+		fmt.Println(err)
+	}
 
 	type issue struct {
 		Number string
@@ -34,35 +58,11 @@ func GetRepoIssues(c *gin.Context) {
 		Issues         []issue
 	}
 
-	// Get Issue Data
-	// issue1 := issue{
-	// 	Number: "001",
-	// 	Title:  "First Issue",
-	// 	Author: "Aldrick",
-	// 	Labels: []string{
-	// 		"Beginner Friendly",
-	// 		"Bug",
-	// 	},
-	// }
-	// issue2 := issue{
-	// 	Number: "002",
-	// 	Title:  "Second Issue",
-	// 	Author: "Aldrick",
-	// 	Labels: []string{
-	// 		"Fix",
-	// 	},
-	// }
-
-	// data := resultsStruct{
-	// 	RepositoryName: repoName,
-	// 	Issues: []issue{
-	// 		issue1, issue2,
-	// 	},
-	// }
-
 	gqlClient := api.GetClient()
-	apiData, err := api.GetIssues(context.Background(), gqlClient)
+	apiData, err := api.GetIssues(context.Background(), gqlClient, owner, repoName)
 	if err != nil {
+		// TODO: generate an error for the html
+		fmt.Print("Boy this failed")
 		panic(err)
 	}
 	repository := apiData.GetRepository()
@@ -70,7 +70,7 @@ func GetRepoIssues(c *gin.Context) {
 	issueEdges := issues.GetEdges()
 
 	templateData := resultsStruct{
-		RepositoryName: repoName,
+		RepositoryName: link,
 	}
 
 	for _, edge := range issueEdges {

@@ -1,5 +1,5 @@
-query GetIssues { 
-  repository(owner: "railwayapp", name: "cli"){
+query GetIssues($owner: String!, $repoName: String!) { 
+  repository(owner: $owner, name: $repoName){
     issues(first: 30, states: [OPEN], orderBy: {field: CREATED_AT, direction: DESC}){
       edges{
         node{
