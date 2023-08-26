@@ -56,22 +56,28 @@ func GetRepoIssues(c *gin.Context) {
 	type resultsStruct struct {
 		RepositoryName string
 		Issues         []issue
+		Success        bool
+	}
+	templateData := resultsStruct{
+		RepositoryName: link,
+		Success:        true,
 	}
 
 	gqlClient := api.GetClient()
 	apiData, err := api.GetIssues(context.Background(), gqlClient, owner, repoName)
 	if err != nil {
 		// TODO: generate an error for the html
-		fmt.Print("Boy this failed")
-		panic(err)
+		templateData.Success = false
+
+		err = templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, templateData)
+		if err != nil {
+			fmt.Print(err)
+		}
+		return
 	}
 	repository := apiData.GetRepository()
 	issues := repository.GetIssues()
 	issueEdges := issues.GetEdges()
-
-	templateData := resultsStruct{
-		RepositoryName: link,
-	}
 
 	for _, edge := range issueEdges {
 		node := edge.GetNode()

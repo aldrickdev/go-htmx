@@ -13,11 +13,12 @@
 <body hx-boost="true">
     <form action="/issues" method="get">
         <legend>Get Repository Issues</legend>
-        <label for="link">Repository Lin</label>
+        <label for="link">Repository Link</label>
         <input type="text" name="link" placeholder="http://github.com/railway/cli"
             value="{{if .RepositoryName}}{{.RepositoryName}}{{end}}">
 
         <button>Search</button>
+        <a href="/">Clear</a>
     </form>
 
     {{if .RepositoryName}}
@@ -25,7 +26,6 @@
         {{template "results.html" .}}
     </div>
     {{end}}
-    <a href="/">Back</a>
 </body>
 
 </html>
