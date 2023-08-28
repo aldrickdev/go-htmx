@@ -41,12 +41,6 @@ func GetRepoIssues(c *gin.Context) {
 	// railwayapp/cli
 
 	link := c.Query("link")
-	owner, repoName, err := extractOwnerRepo(link)
-	if err != nil {
-		// TODO: generate an error for the html
-		fmt.Println(err)
-	}
-
 	type issue struct {
 		Number string
 		Title  string
@@ -63,15 +57,29 @@ func GetRepoIssues(c *gin.Context) {
 		Success:        true,
 	}
 
-	gqlClient := api.GetClient()
-	apiData, err := api.GetIssues(context.Background(), gqlClient, owner, repoName)
+	owner, repoName, err := extractOwnerRepo(link)
 	if err != nil {
-		// TODO: generate an error for the html
+		fmt.Println(err)
 		templateData.Success = false
 
 		err = templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, templateData)
 		if err != nil {
-			fmt.Print(err)
+			fmt.Println(err)
+		}
+		return
+	}
+
+	gqlClient := api.GetClient()
+	apiData, err := api.GetIssues(context.Background(), gqlClient, owner, repoName)
+	if err != nil {
+		fmt.Println(err)
+
+		// c.Request.Response.StatusCode = http.StatusBadRequest
+		templateData.Success = false
+
+		err = templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, templateData)
+		if err != nil {
+			fmt.Println(err)
 		}
 		return
 	}
