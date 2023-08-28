@@ -1,0 +1,36 @@
+{{if .Success}}
+<h3>Issues For Repository: {{.RepositoryName}}</h3>
+<table>
+    <tr>
+        <th>Number</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Labels</th>
+    </tr>
+    {{range .Issues}}
+    <tr>
+        <td>{{.Number}}</td>
+        <td>{{.Title}}</td>
+        <td>{{.Author}}</td>
+        <td>
+            <ul>
+                {{range .Labels}}
+                <ol>{{.}}</ol>
+                {{end}}
+            </ul>
+        </td>
+    </tr>
+    {{end}}
+</table>
+
+{{else}}
+
+<h3>Request Failed</h3>
+<p>Please try again with a valid <span>&lt;Owner Name&gt;/&lt;Repository Name&gt;</span> In one of the following
+    formats:</p>
+<ol>
+    <li>https://github.com/OwnerName/RepositoryName</li>
+    <li>github.com/OwnerName/RepositoryName</li>
+    <li>OwnerName/RepositoryName</li>
+</ol>
+{{end}}

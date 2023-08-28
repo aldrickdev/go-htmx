@@ -1,0 +1,17 @@
+{{define "content"}}
+<form action="/issues" method="get">
+    <legend>Get Repository Issues</legend>
+    <label for="link">Repository Link</label>
+    <input type="text" name="link" placeholder="http://github.com/railway/cli"
+        value="{{if .RepositoryName}}{{.RepositoryName}}{{end}}">
+
+    <button>Search</button>
+    <a href="/">Clear</a>
+</form>
+
+{{if .RequestMade}}
+<div id="results">
+    {{template "issueResults.html" .}}
+</div>
+{{end}}
+{{end}}

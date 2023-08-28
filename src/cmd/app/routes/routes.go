@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/aldrickdev/go-htmx/cmd/app/api"
-	"github.com/aldrickdev/go-htmx/cmd/app/templates"
 	"github.com/gin-gonic/gin"
 )
 
@@ -50,10 +49,12 @@ func GetRepoIssues(c *gin.Context) {
 	type resultsStruct struct {
 		RepositoryName string
 		Issues         []issue
+		RequestMade    bool
 		Success        bool
 	}
 	templateData := resultsStruct{
 		RepositoryName: link,
+		RequestMade:    true,
 		Success:        true,
 	}
 
@@ -61,11 +62,7 @@ func GetRepoIssues(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 		templateData.Success = false
-
-		err = templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, templateData)
-		if err != nil {
-			fmt.Println(err)
-		}
+		c.HTML(422, "index", templateData)
 		return
 	}
 
@@ -73,14 +70,8 @@ func GetRepoIssues(c *gin.Context) {
 	apiData, err := api.GetIssues(context.Background(), gqlClient, owner, repoName)
 	if err != nil {
 		fmt.Println(err)
-
-		// c.Request.Response.StatusCode = http.StatusBadRequest
 		templateData.Success = false
-
-		err = templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, templateData)
-		if err != nil {
-			fmt.Println(err)
-		}
+		c.HTML(400, "index", templateData)
 		return
 	}
 	repository := apiData.GetRepository()
@@ -109,15 +100,9 @@ func GetRepoIssues(c *gin.Context) {
 		)
 	}
 
-	err = templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, templateData)
-	if err != nil {
-		fmt.Print(err)
-	}
+	c.HTML(200, "index", templateData)
 }
 
 func Index(c *gin.Context) {
-	err := templates.ApplicationTemplates.ExecuteTemplate(c.Writer, templates.IndexPage, nil)
-	if err != nil {
-		panic(err)
-	}
+	c.HTML(200, "index", nil)
 }
