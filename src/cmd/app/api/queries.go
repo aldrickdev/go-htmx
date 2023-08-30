@@ -11,6 +11,477 @@ import (
 	"github.com/Khan/genqlient/graphql"
 )
 
+// GetInitialIssuesRepository includes the requested fields of the GraphQL type Repository.
+// The GraphQL type's documentation follows.
+//
+// A repository contains the content for a project.
+type GetInitialIssuesRepository struct {
+	// A list of issues that have been opened in the repository.
+	Issues GetInitialIssuesRepositoryIssuesIssueConnection `json:"issues"`
+}
+
+// GetIssues returns GetInitialIssuesRepository.Issues, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepository) GetIssues() GetInitialIssuesRepositoryIssuesIssueConnection {
+	return v.Issues
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnection includes the requested fields of the GraphQL type IssueConnection.
+// The GraphQL type's documentation follows.
+//
+// The connection type for Issue.
+type GetInitialIssuesRepositoryIssuesIssueConnection struct {
+	// A list of edges.
+	Edges []*GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge `json:"edges"`
+	// Information to aid in pagination.
+	PageInfo GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo `json:"pageInfo"`
+}
+
+// GetEdges returns GetInitialIssuesRepositoryIssuesIssueConnection.Edges, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnection) GetEdges() []*GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge {
+	return v.Edges
+}
+
+// GetPageInfo returns GetInitialIssuesRepositoryIssuesIssueConnection.PageInfo, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnection) GetPageInfo() GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo {
+	return v.PageInfo
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge includes the requested fields of the GraphQL type IssueEdge.
+// The GraphQL type's documentation follows.
+//
+// An edge in a connection.
+type GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge struct {
+	// The item at the end of the edge.
+	Node *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue `json:"node"`
+	// A cursor for use in pagination.
+	Cursor string `json:"cursor"`
+}
+
+// GetNode returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge.Node, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge) GetNode() *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue {
+	return v.Node
+}
+
+// GetCursor returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge.Cursor, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge) GetCursor() string {
+	return v.Cursor
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
+// The GraphQL type's documentation follows.
+//
+// An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.
+type GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue struct {
+	// Identifies the issue title.
+	Title string `json:"title"`
+	// Identifies the issue number.
+	Number int `json:"number"`
+	// Identifies the date and time when the object was created.
+	CreatedAt time.Time `json:"createdAt"`
+	// The actor who authored the comment.
+	Author *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor `json:"-"`
+	// A list of labels associated with the object.
+	Labels *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection `json:"labels"`
+}
+
+// GetTitle returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Title, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetTitle() string {
+	return v.Title
+}
+
+// GetNumber returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Number, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetNumber() int {
+	return v.Number
+}
+
+// GetCreatedAt returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.CreatedAt, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetCreatedAt() time.Time {
+	return v.CreatedAt
+}
+
+// GetAuthor returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetAuthor() *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor {
+	return v.Author
+}
+
+// GetLabels returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Labels, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetLabels() *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection {
+	return v.Labels
+}
+
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue
+		Author json.RawMessage `json:"author"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.Author
+		src := firstPass.Author
+		if len(src) != 0 && string(src) != "null" {
+			*dst = new(GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor)
+			err = __unmarshalGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(
+				src, *dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue struct {
+	Title string `json:"title"`
+
+	Number int `json:"number"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	Author json.RawMessage `json:"author"`
+
+	Labels *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection `json:"labels"`
+}
+
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) __premarshalJSON() (*__premarshalGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue, error) {
+	var retval __premarshalGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue
+
+	retval.Title = v.Title
+	retval.Number = v.Number
+	retval.CreatedAt = v.CreatedAt
+	{
+
+		dst := &retval.Author
+		src := v.Author
+		if src != nil {
+			var err error
+			*dst, err = __marshalGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author: %w", err)
+			}
+		}
+	}
+	retval.Labels = v.Labels
+	return &retval, nil
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor includes the requested fields of the GraphQL interface Actor.
+//
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor is implemented by the following types:
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser
+// The GraphQL type's documentation follows.
+//
+// Represents an object which can take actions on GitHub. Typically a User or Bot.
+type GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor interface {
+	implementsGraphQLInterfaceGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+	// GetLogin returns the interface-field "login" from its implementation.
+	// The GraphQL interface field's documentation follows.
+	//
+	// The username of the actor.
+	GetLogin() string
+}
+
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) implementsGraphQLInterfaceGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) implementsGraphQLInterfaceGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) implementsGraphQLInterfaceGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) implementsGraphQLInterfaceGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) implementsGraphQLInterfaceGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+
+func __unmarshalGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(b []byte, v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "Bot":
+		*v = new(GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot)
+		return json.Unmarshal(b, *v)
+	case "EnterpriseUserAccount":
+		*v = new(GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount)
+		return json.Unmarshal(b, *v)
+	case "Mannequin":
+		*v = new(GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin)
+		return json.Unmarshal(b, *v)
+	case "Organization":
+		*v = new(GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization)
+		return json.Unmarshal(b, *v)
+	case "User":
+		*v = new(GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing Actor.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalGetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot:
+		typename = "Bot"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount:
+		typename = "EnterpriseUserAccount"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin:
+		typename = "Mannequin"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization:
+		typename = "Organization"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser:
+		typename = "User"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser
+		}{typename, v}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor: "%T"`, v)
+	}
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot includes the requested fields of the GraphQL type Bot.
+// The GraphQL type's documentation follows.
+//
+// A special type of user which takes actions on behalf of GitHub Apps.
+type GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot.Typename, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot.Login, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) GetLogin() string {
+	return v.Login
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount includes the requested fields of the GraphQL type EnterpriseUserAccount.
+// The GraphQL type's documentation follows.
+//
+// An account for a user who is an admin of an enterprise or a member of an enterprise through one or more organizations.
+type GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount.Typename, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount.Login, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) GetLogin() string {
+	return v.Login
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin includes the requested fields of the GraphQL type Mannequin.
+// The GraphQL type's documentation follows.
+//
+// A placeholder user for attribution of imported data on GitHub.
+type GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin.Typename, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin.Login, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) GetLogin() string {
+	return v.Login
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization includes the requested fields of the GraphQL type Organization.
+// The GraphQL type's documentation follows.
+//
+// An account on GitHub, with one or more owners, that has repositories, members and teams.
+type GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization.Typename, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization.Login, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) GetLogin() string {
+	return v.Login
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser includes the requested fields of the GraphQL type User.
+// The GraphQL type's documentation follows.
+//
+// A user is an individual's account on GitHub that owns repositories and can make new content.
+type GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser.Typename, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser.Login, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) GetLogin() string {
+	return v.Login
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection includes the requested fields of the GraphQL type LabelConnection.
+// The GraphQL type's documentation follows.
+//
+// The connection type for Label.
+type GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection struct {
+	// A list of nodes.
+	Nodes []*GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel `json:"nodes"`
+}
+
+// GetNodes returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection.Nodes, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection) GetNodes() []*GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel {
+	return v.Nodes
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel includes the requested fields of the GraphQL type Label.
+// The GraphQL type's documentation follows.
+//
+// A label for categorizing Issues, Pull Requests, Milestones, or Discussions with a given Repository.
+type GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel struct {
+	// Identifies the label name.
+	Name string `json:"name"`
+}
+
+// GetName returns GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel.Name, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel) GetName() string {
+	return v.Name
+}
+
+// GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo includes the requested fields of the GraphQL type PageInfo.
+// The GraphQL type's documentation follows.
+//
+// Information about pagination in a connection.
+type GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo struct {
+	// When paginating backwards, the cursor to continue.
+	StartCursor *string `json:"startCursor"`
+	// When paginating forwards, the cursor to continue.
+	EndCursor *string `json:"endCursor"`
+	// When paginating backwards, are there more items?
+	HasPreviousPage bool `json:"hasPreviousPage"`
+	// When paginating forwards, are there more items?
+	HasNextPage bool `json:"hasNextPage"`
+}
+
+// GetStartCursor returns GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo.StartCursor, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo) GetStartCursor() *string {
+	return v.StartCursor
+}
+
+// GetEndCursor returns GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo.EndCursor, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo) GetEndCursor() *string {
+	return v.EndCursor
+}
+
+// GetHasPreviousPage returns GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo.HasPreviousPage, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo) GetHasPreviousPage() bool {
+	return v.HasPreviousPage
+}
+
+// GetHasNextPage returns GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo.HasNextPage, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesRepositoryIssuesIssueConnectionPageInfo) GetHasNextPage() bool {
+	return v.HasNextPage
+}
+
+// GetInitialIssuesResponse is returned by GetInitialIssues on success.
+type GetInitialIssuesResponse struct {
+	// Lookup a given repository by the owner and repository name.
+	Repository *GetInitialIssuesRepository `json:"repository"`
+}
+
+// GetRepository returns GetInitialIssuesResponse.Repository, and is useful for accessing the field via an interface.
+func (v *GetInitialIssuesResponse) GetRepository() *GetInitialIssuesRepository { return v.Repository }
+
 // GetIssuesRepository includes the requested fields of the GraphQL type Repository.
 // The GraphQL type's documentation follows.
 //
@@ -462,6 +933,964 @@ type GetIssuesResponse struct {
 // GetRepository returns GetIssuesResponse.Repository, and is useful for accessing the field via an interface.
 func (v *GetIssuesResponse) GetRepository() *GetIssuesRepository { return v.Repository }
 
+// GetNextIssuesRepository includes the requested fields of the GraphQL type Repository.
+// The GraphQL type's documentation follows.
+//
+// A repository contains the content for a project.
+type GetNextIssuesRepository struct {
+	// A list of issues that have been opened in the repository.
+	Issues GetNextIssuesRepositoryIssuesIssueConnection `json:"issues"`
+}
+
+// GetIssues returns GetNextIssuesRepository.Issues, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepository) GetIssues() GetNextIssuesRepositoryIssuesIssueConnection {
+	return v.Issues
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnection includes the requested fields of the GraphQL type IssueConnection.
+// The GraphQL type's documentation follows.
+//
+// The connection type for Issue.
+type GetNextIssuesRepositoryIssuesIssueConnection struct {
+	// A list of edges.
+	Edges []*GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge `json:"edges"`
+	// Information to aid in pagination.
+	PageInfo GetNextIssuesRepositoryIssuesIssueConnectionPageInfo `json:"pageInfo"`
+}
+
+// GetEdges returns GetNextIssuesRepositoryIssuesIssueConnection.Edges, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnection) GetEdges() []*GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge {
+	return v.Edges
+}
+
+// GetPageInfo returns GetNextIssuesRepositoryIssuesIssueConnection.PageInfo, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnection) GetPageInfo() GetNextIssuesRepositoryIssuesIssueConnectionPageInfo {
+	return v.PageInfo
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge includes the requested fields of the GraphQL type IssueEdge.
+// The GraphQL type's documentation follows.
+//
+// An edge in a connection.
+type GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge struct {
+	// The item at the end of the edge.
+	Node *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue `json:"node"`
+	// A cursor for use in pagination.
+	Cursor string `json:"cursor"`
+}
+
+// GetNode returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge.Node, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge) GetNode() *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue {
+	return v.Node
+}
+
+// GetCursor returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge.Cursor, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge) GetCursor() string {
+	return v.Cursor
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
+// The GraphQL type's documentation follows.
+//
+// An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.
+type GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue struct {
+	// Identifies the issue title.
+	Title string `json:"title"`
+	// Identifies the issue number.
+	Number int `json:"number"`
+	// Identifies the date and time when the object was created.
+	CreatedAt time.Time `json:"createdAt"`
+	// The actor who authored the comment.
+	Author *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor `json:"-"`
+	// A list of labels associated with the object.
+	Labels *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection `json:"labels"`
+}
+
+// GetTitle returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Title, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetTitle() string {
+	return v.Title
+}
+
+// GetNumber returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Number, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetNumber() int {
+	return v.Number
+}
+
+// GetCreatedAt returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.CreatedAt, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetCreatedAt() time.Time {
+	return v.CreatedAt
+}
+
+// GetAuthor returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetAuthor() *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor {
+	return v.Author
+}
+
+// GetLabels returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Labels, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetLabels() *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection {
+	return v.Labels
+}
+
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue
+		Author json.RawMessage `json:"author"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.Author
+		src := firstPass.Author
+		if len(src) != 0 && string(src) != "null" {
+			*dst = new(GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor)
+			err = __unmarshalGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(
+				src, *dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue struct {
+	Title string `json:"title"`
+
+	Number int `json:"number"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	Author json.RawMessage `json:"author"`
+
+	Labels *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection `json:"labels"`
+}
+
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) __premarshalJSON() (*__premarshalGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue, error) {
+	var retval __premarshalGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue
+
+	retval.Title = v.Title
+	retval.Number = v.Number
+	retval.CreatedAt = v.CreatedAt
+	{
+
+		dst := &retval.Author
+		src := v.Author
+		if src != nil {
+			var err error
+			*dst, err = __marshalGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author: %w", err)
+			}
+		}
+	}
+	retval.Labels = v.Labels
+	return &retval, nil
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor includes the requested fields of the GraphQL interface Actor.
+//
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor is implemented by the following types:
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser
+// The GraphQL type's documentation follows.
+//
+// Represents an object which can take actions on GitHub. Typically a User or Bot.
+type GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor interface {
+	implementsGraphQLInterfaceGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+	// GetLogin returns the interface-field "login" from its implementation.
+	// The GraphQL interface field's documentation follows.
+	//
+	// The username of the actor.
+	GetLogin() string
+}
+
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) implementsGraphQLInterfaceGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) implementsGraphQLInterfaceGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) implementsGraphQLInterfaceGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) implementsGraphQLInterfaceGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) implementsGraphQLInterfaceGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+
+func __unmarshalGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(b []byte, v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "Bot":
+		*v = new(GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot)
+		return json.Unmarshal(b, *v)
+	case "EnterpriseUserAccount":
+		*v = new(GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount)
+		return json.Unmarshal(b, *v)
+	case "Mannequin":
+		*v = new(GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin)
+		return json.Unmarshal(b, *v)
+	case "Organization":
+		*v = new(GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization)
+		return json.Unmarshal(b, *v)
+	case "User":
+		*v = new(GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing Actor.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalGetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot:
+		typename = "Bot"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount:
+		typename = "EnterpriseUserAccount"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin:
+		typename = "Mannequin"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization:
+		typename = "Organization"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser:
+		typename = "User"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser
+		}{typename, v}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor: "%T"`, v)
+	}
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot includes the requested fields of the GraphQL type Bot.
+// The GraphQL type's documentation follows.
+//
+// A special type of user which takes actions on behalf of GitHub Apps.
+type GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot.Typename, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot.Login, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) GetLogin() string {
+	return v.Login
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount includes the requested fields of the GraphQL type EnterpriseUserAccount.
+// The GraphQL type's documentation follows.
+//
+// An account for a user who is an admin of an enterprise or a member of an enterprise through one or more organizations.
+type GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount.Typename, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount.Login, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) GetLogin() string {
+	return v.Login
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin includes the requested fields of the GraphQL type Mannequin.
+// The GraphQL type's documentation follows.
+//
+// A placeholder user for attribution of imported data on GitHub.
+type GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin.Typename, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin.Login, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) GetLogin() string {
+	return v.Login
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization includes the requested fields of the GraphQL type Organization.
+// The GraphQL type's documentation follows.
+//
+// An account on GitHub, with one or more owners, that has repositories, members and teams.
+type GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization.Typename, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization.Login, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) GetLogin() string {
+	return v.Login
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser includes the requested fields of the GraphQL type User.
+// The GraphQL type's documentation follows.
+//
+// A user is an individual's account on GitHub that owns repositories and can make new content.
+type GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser.Typename, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser.Login, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) GetLogin() string {
+	return v.Login
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection includes the requested fields of the GraphQL type LabelConnection.
+// The GraphQL type's documentation follows.
+//
+// The connection type for Label.
+type GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection struct {
+	// A list of nodes.
+	Nodes []*GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel `json:"nodes"`
+}
+
+// GetNodes returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection.Nodes, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection) GetNodes() []*GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel {
+	return v.Nodes
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel includes the requested fields of the GraphQL type Label.
+// The GraphQL type's documentation follows.
+//
+// A label for categorizing Issues, Pull Requests, Milestones, or Discussions with a given Repository.
+type GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel struct {
+	// Identifies the label name.
+	Name string `json:"name"`
+}
+
+// GetName returns GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel.Name, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel) GetName() string {
+	return v.Name
+}
+
+// GetNextIssuesRepositoryIssuesIssueConnectionPageInfo includes the requested fields of the GraphQL type PageInfo.
+// The GraphQL type's documentation follows.
+//
+// Information about pagination in a connection.
+type GetNextIssuesRepositoryIssuesIssueConnectionPageInfo struct {
+	// When paginating backwards, the cursor to continue.
+	StartCursor *string `json:"startCursor"`
+	// When paginating forwards, the cursor to continue.
+	EndCursor *string `json:"endCursor"`
+	// When paginating backwards, are there more items?
+	HasPreviousPage bool `json:"hasPreviousPage"`
+	// When paginating forwards, are there more items?
+	HasNextPage bool `json:"hasNextPage"`
+}
+
+// GetStartCursor returns GetNextIssuesRepositoryIssuesIssueConnectionPageInfo.StartCursor, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionPageInfo) GetStartCursor() *string {
+	return v.StartCursor
+}
+
+// GetEndCursor returns GetNextIssuesRepositoryIssuesIssueConnectionPageInfo.EndCursor, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionPageInfo) GetEndCursor() *string {
+	return v.EndCursor
+}
+
+// GetHasPreviousPage returns GetNextIssuesRepositoryIssuesIssueConnectionPageInfo.HasPreviousPage, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionPageInfo) GetHasPreviousPage() bool {
+	return v.HasPreviousPage
+}
+
+// GetHasNextPage returns GetNextIssuesRepositoryIssuesIssueConnectionPageInfo.HasNextPage, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesRepositoryIssuesIssueConnectionPageInfo) GetHasNextPage() bool {
+	return v.HasNextPage
+}
+
+// GetNextIssuesResponse is returned by GetNextIssues on success.
+type GetNextIssuesResponse struct {
+	// Lookup a given repository by the owner and repository name.
+	Repository *GetNextIssuesRepository `json:"repository"`
+}
+
+// GetRepository returns GetNextIssuesResponse.Repository, and is useful for accessing the field via an interface.
+func (v *GetNextIssuesResponse) GetRepository() *GetNextIssuesRepository { return v.Repository }
+
+// GetPreviousIssuesRepository includes the requested fields of the GraphQL type Repository.
+// The GraphQL type's documentation follows.
+//
+// A repository contains the content for a project.
+type GetPreviousIssuesRepository struct {
+	// A list of issues that have been opened in the repository.
+	Issues GetPreviousIssuesRepositoryIssuesIssueConnection `json:"issues"`
+}
+
+// GetIssues returns GetPreviousIssuesRepository.Issues, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepository) GetIssues() GetPreviousIssuesRepositoryIssuesIssueConnection {
+	return v.Issues
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnection includes the requested fields of the GraphQL type IssueConnection.
+// The GraphQL type's documentation follows.
+//
+// The connection type for Issue.
+type GetPreviousIssuesRepositoryIssuesIssueConnection struct {
+	// A list of edges.
+	Edges []*GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge `json:"edges"`
+	// Information to aid in pagination.
+	PageInfo GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo `json:"pageInfo"`
+}
+
+// GetEdges returns GetPreviousIssuesRepositoryIssuesIssueConnection.Edges, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnection) GetEdges() []*GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge {
+	return v.Edges
+}
+
+// GetPageInfo returns GetPreviousIssuesRepositoryIssuesIssueConnection.PageInfo, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnection) GetPageInfo() GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo {
+	return v.PageInfo
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge includes the requested fields of the GraphQL type IssueEdge.
+// The GraphQL type's documentation follows.
+//
+// An edge in a connection.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge struct {
+	// The item at the end of the edge.
+	Node *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue `json:"node"`
+	// A cursor for use in pagination.
+	Cursor string `json:"cursor"`
+}
+
+// GetNode returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge.Node, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge) GetNode() *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue {
+	return v.Node
+}
+
+// GetCursor returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge.Cursor, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge) GetCursor() string {
+	return v.Cursor
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
+// The GraphQL type's documentation follows.
+//
+// An Issue is a place to discuss ideas, enhancements, tasks, and bugs for a project.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue struct {
+	// Identifies the issue title.
+	Title string `json:"title"`
+	// Identifies the issue number.
+	Number int `json:"number"`
+	// Identifies the date and time when the object was created.
+	CreatedAt time.Time `json:"createdAt"`
+	// The actor who authored the comment.
+	Author *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor `json:"-"`
+	// A list of labels associated with the object.
+	Labels *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection `json:"labels"`
+}
+
+// GetTitle returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Title, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetTitle() string {
+	return v.Title
+}
+
+// GetNumber returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Number, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetNumber() int {
+	return v.Number
+}
+
+// GetCreatedAt returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.CreatedAt, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetCreatedAt() time.Time {
+	return v.CreatedAt
+}
+
+// GetAuthor returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetAuthor() *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor {
+	return v.Author
+}
+
+// GetLabels returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Labels, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetLabels() *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection {
+	return v.Labels
+}
+
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue
+		Author json.RawMessage `json:"author"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.Author
+		src := firstPass.Author
+		if len(src) != 0 && string(src) != "null" {
+			*dst = new(GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor)
+			err = __unmarshalGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(
+				src, *dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue struct {
+	Title string `json:"title"`
+
+	Number int `json:"number"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	Author json.RawMessage `json:"author"`
+
+	Labels *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection `json:"labels"`
+}
+
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) __premarshalJSON() (*__premarshalGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue, error) {
+	var retval __premarshalGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue
+
+	retval.Title = v.Title
+	retval.Number = v.Number
+	retval.CreatedAt = v.CreatedAt
+	{
+
+		dst := &retval.Author
+		src := v.Author
+		if src != nil {
+			var err error
+			*dst, err = __marshalGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author: %w", err)
+			}
+		}
+	}
+	retval.Labels = v.Labels
+	return &retval, nil
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor includes the requested fields of the GraphQL interface Actor.
+//
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor is implemented by the following types:
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser
+// The GraphQL type's documentation follows.
+//
+// Represents an object which can take actions on GitHub. Typically a User or Bot.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor interface {
+	implementsGraphQLInterfaceGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+	// GetLogin returns the interface-field "login" from its implementation.
+	// The GraphQL interface field's documentation follows.
+	//
+	// The username of the actor.
+	GetLogin() string
+}
+
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) implementsGraphQLInterfaceGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) implementsGraphQLInterfaceGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) implementsGraphQLInterfaceGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) implementsGraphQLInterfaceGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) implementsGraphQLInterfaceGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor() {
+}
+
+func __unmarshalGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(b []byte, v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "Bot":
+		*v = new(GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot)
+		return json.Unmarshal(b, *v)
+	case "EnterpriseUserAccount":
+		*v = new(GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount)
+		return json.Unmarshal(b, *v)
+	case "Mannequin":
+		*v = new(GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin)
+		return json.Unmarshal(b, *v)
+	case "Organization":
+		*v = new(GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization)
+		return json.Unmarshal(b, *v)
+	case "User":
+		*v = new(GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing Actor.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalGetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot:
+		typename = "Bot"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount:
+		typename = "EnterpriseUserAccount"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin:
+		typename = "Mannequin"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization:
+		typename = "Organization"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser:
+		typename = "User"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser
+		}{typename, v}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor: "%T"`, v)
+	}
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot includes the requested fields of the GraphQL type Bot.
+// The GraphQL type's documentation follows.
+//
+// A special type of user which takes actions on behalf of GitHub Apps.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot.Typename, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot.Login, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) GetLogin() string {
+	return v.Login
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount includes the requested fields of the GraphQL type EnterpriseUserAccount.
+// The GraphQL type's documentation follows.
+//
+// An account for a user who is an admin of an enterprise or a member of an enterprise through one or more organizations.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount.Typename, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount.Login, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) GetLogin() string {
+	return v.Login
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin includes the requested fields of the GraphQL type Mannequin.
+// The GraphQL type's documentation follows.
+//
+// A placeholder user for attribution of imported data on GitHub.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin.Typename, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin.Login, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) GetLogin() string {
+	return v.Login
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization includes the requested fields of the GraphQL type Organization.
+// The GraphQL type's documentation follows.
+//
+// An account on GitHub, with one or more owners, that has repositories, members and teams.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization.Typename, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization.Login, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) GetLogin() string {
+	return v.Login
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser includes the requested fields of the GraphQL type User.
+// The GraphQL type's documentation follows.
+//
+// A user is an individual's account on GitHub that owns repositories and can make new content.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser struct {
+	Typename *string `json:"__typename"`
+	// The username of the actor.
+	Login string `json:"login"`
+}
+
+// GetTypename returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser.Typename, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) GetTypename() *string {
+	return v.Typename
+}
+
+// GetLogin returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser.Login, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) GetLogin() string {
+	return v.Login
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection includes the requested fields of the GraphQL type LabelConnection.
+// The GraphQL type's documentation follows.
+//
+// The connection type for Label.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection struct {
+	// A list of nodes.
+	Nodes []*GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel `json:"nodes"`
+}
+
+// GetNodes returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection.Nodes, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection) GetNodes() []*GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel {
+	return v.Nodes
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel includes the requested fields of the GraphQL type Label.
+// The GraphQL type's documentation follows.
+//
+// A label for categorizing Issues, Pull Requests, Milestones, or Discussions with a given Repository.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel struct {
+	// Identifies the label name.
+	Name string `json:"name"`
+}
+
+// GetName returns GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel.Name, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel) GetName() string {
+	return v.Name
+}
+
+// GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo includes the requested fields of the GraphQL type PageInfo.
+// The GraphQL type's documentation follows.
+//
+// Information about pagination in a connection.
+type GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo struct {
+	// When paginating backwards, the cursor to continue.
+	StartCursor *string `json:"startCursor"`
+	// When paginating forwards, the cursor to continue.
+	EndCursor *string `json:"endCursor"`
+	// When paginating backwards, are there more items?
+	HasPreviousPage bool `json:"hasPreviousPage"`
+	// When paginating forwards, are there more items?
+	HasNextPage bool `json:"hasNextPage"`
+}
+
+// GetStartCursor returns GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo.StartCursor, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo) GetStartCursor() *string {
+	return v.StartCursor
+}
+
+// GetEndCursor returns GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo.EndCursor, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo) GetEndCursor() *string {
+	return v.EndCursor
+}
+
+// GetHasPreviousPage returns GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo.HasPreviousPage, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo) GetHasPreviousPage() bool {
+	return v.HasPreviousPage
+}
+
+// GetHasNextPage returns GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo.HasNextPage, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesRepositoryIssuesIssueConnectionPageInfo) GetHasNextPage() bool {
+	return v.HasNextPage
+}
+
+// GetPreviousIssuesResponse is returned by GetPreviousIssues on success.
+type GetPreviousIssuesResponse struct {
+	// Lookup a given repository by the owner and repository name.
+	Repository *GetPreviousIssuesRepository `json:"repository"`
+}
+
+// GetRepository returns GetPreviousIssuesResponse.Repository, and is useful for accessing the field via an interface.
+func (v *GetPreviousIssuesResponse) GetRepository() *GetPreviousIssuesRepository { return v.Repository }
+
+// __GetInitialIssuesInput is used internally by genqlient
+type __GetInitialIssuesInput struct {
+	FirstAmount int    `json:"firstAmount"`
+	Owner       string `json:"owner"`
+	RepoName    string `json:"repoName"`
+}
+
+// GetFirstAmount returns __GetInitialIssuesInput.FirstAmount, and is useful for accessing the field via an interface.
+func (v *__GetInitialIssuesInput) GetFirstAmount() int { return v.FirstAmount }
+
+// GetOwner returns __GetInitialIssuesInput.Owner, and is useful for accessing the field via an interface.
+func (v *__GetInitialIssuesInput) GetOwner() string { return v.Owner }
+
+// GetRepoName returns __GetInitialIssuesInput.RepoName, and is useful for accessing the field via an interface.
+func (v *__GetInitialIssuesInput) GetRepoName() string { return v.RepoName }
+
 // __GetIssuesInput is used internally by genqlient
 type __GetIssuesInput struct {
 	Owner       string  `json:"owner"`
@@ -481,6 +1910,109 @@ func (v *__GetIssuesInput) GetIssueAmount() int { return v.IssueAmount }
 
 // GetLastCursor returns __GetIssuesInput.LastCursor, and is useful for accessing the field via an interface.
 func (v *__GetIssuesInput) GetLastCursor() *string { return v.LastCursor }
+
+// __GetNextIssuesInput is used internally by genqlient
+type __GetNextIssuesInput struct {
+	FirstAmount int    `json:"firstAmount"`
+	Owner       string `json:"owner"`
+	RepoName    string `json:"repoName"`
+	AfterCursor string `json:"afterCursor"`
+}
+
+// GetFirstAmount returns __GetNextIssuesInput.FirstAmount, and is useful for accessing the field via an interface.
+func (v *__GetNextIssuesInput) GetFirstAmount() int { return v.FirstAmount }
+
+// GetOwner returns __GetNextIssuesInput.Owner, and is useful for accessing the field via an interface.
+func (v *__GetNextIssuesInput) GetOwner() string { return v.Owner }
+
+// GetRepoName returns __GetNextIssuesInput.RepoName, and is useful for accessing the field via an interface.
+func (v *__GetNextIssuesInput) GetRepoName() string { return v.RepoName }
+
+// GetAfterCursor returns __GetNextIssuesInput.AfterCursor, and is useful for accessing the field via an interface.
+func (v *__GetNextIssuesInput) GetAfterCursor() string { return v.AfterCursor }
+
+// __GetPreviousIssuesInput is used internally by genqlient
+type __GetPreviousIssuesInput struct {
+	LastAmount   int    `json:"lastAmount"`
+	Owner        string `json:"owner"`
+	RepoName     string `json:"repoName"`
+	BeforeCursor string `json:"beforeCursor"`
+}
+
+// GetLastAmount returns __GetPreviousIssuesInput.LastAmount, and is useful for accessing the field via an interface.
+func (v *__GetPreviousIssuesInput) GetLastAmount() int { return v.LastAmount }
+
+// GetOwner returns __GetPreviousIssuesInput.Owner, and is useful for accessing the field via an interface.
+func (v *__GetPreviousIssuesInput) GetOwner() string { return v.Owner }
+
+// GetRepoName returns __GetPreviousIssuesInput.RepoName, and is useful for accessing the field via an interface.
+func (v *__GetPreviousIssuesInput) GetRepoName() string { return v.RepoName }
+
+// GetBeforeCursor returns __GetPreviousIssuesInput.BeforeCursor, and is useful for accessing the field via an interface.
+func (v *__GetPreviousIssuesInput) GetBeforeCursor() string { return v.BeforeCursor }
+
+// The query or mutation executed by GetInitialIssues.
+const GetInitialIssues_Operation = `
+query GetInitialIssues ($firstAmount: Int!, $owner: String!, $repoName: String!) {
+	repository(owner: $owner, name: $repoName) {
+		issues(first: $firstAmount, states: [OPEN], orderBy: {field:CREATED_AT,direction:DESC}) {
+			edges {
+				node {
+					title
+					number
+					createdAt
+					author {
+						__typename
+						login
+					}
+					labels(first: 5) {
+						nodes {
+							name
+						}
+					}
+				}
+				cursor
+			}
+			pageInfo {
+				startCursor
+				endCursor
+				hasPreviousPage
+				hasNextPage
+			}
+		}
+	}
+}
+`
+
+func GetInitialIssues(
+	ctx context.Context,
+	client graphql.Client,
+	firstAmount int,
+	owner string,
+	repoName string,
+) (*GetInitialIssuesResponse, error) {
+	req := &graphql.Request{
+		OpName: "GetInitialIssues",
+		Query:  GetInitialIssues_Operation,
+		Variables: &__GetInitialIssuesInput{
+			FirstAmount: firstAmount,
+			Owner:       owner,
+			RepoName:    repoName,
+		},
+	}
+	var err error
+
+	var data GetInitialIssuesResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
 
 // The query or mutation executed by GetIssues.
 const GetIssues_Operation = `
@@ -534,6 +2066,136 @@ func GetIssues(
 	var err error
 
 	var data GetIssuesResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// The query or mutation executed by GetNextIssues.
+const GetNextIssues_Operation = `
+query GetNextIssues ($firstAmount: Int!, $owner: String!, $repoName: String!, $afterCursor: String!) {
+	repository(owner: $owner, name: $repoName) {
+		issues(first: $firstAmount, after: $afterCursor, states: [OPEN], orderBy: {field:CREATED_AT,direction:DESC}) {
+			edges {
+				node {
+					title
+					number
+					createdAt
+					author {
+						__typename
+						login
+					}
+					labels(first: 5) {
+						nodes {
+							name
+						}
+					}
+				}
+				cursor
+			}
+			pageInfo {
+				startCursor
+				endCursor
+				hasPreviousPage
+				hasNextPage
+			}
+		}
+	}
+}
+`
+
+func GetNextIssues(
+	ctx context.Context,
+	client graphql.Client,
+	firstAmount int,
+	owner string,
+	repoName string,
+	afterCursor string,
+) (*GetNextIssuesResponse, error) {
+	req := &graphql.Request{
+		OpName: "GetNextIssues",
+		Query:  GetNextIssues_Operation,
+		Variables: &__GetNextIssuesInput{
+			FirstAmount: firstAmount,
+			Owner:       owner,
+			RepoName:    repoName,
+			AfterCursor: afterCursor,
+		},
+	}
+	var err error
+
+	var data GetNextIssuesResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// The query or mutation executed by GetPreviousIssues.
+const GetPreviousIssues_Operation = `
+query GetPreviousIssues ($lastAmount: Int!, $owner: String!, $repoName: String!, $beforeCursor: String!) {
+	repository(owner: $owner, name: $repoName) {
+		issues(last: $lastAmount, before: $beforeCursor, states: [OPEN], orderBy: {field:CREATED_AT,direction:DESC}) {
+			edges {
+				node {
+					title
+					number
+					createdAt
+					author {
+						__typename
+						login
+					}
+					labels(first: 5) {
+						nodes {
+							name
+						}
+					}
+				}
+				cursor
+			}
+			pageInfo {
+				startCursor
+				endCursor
+				hasPreviousPage
+				hasNextPage
+			}
+		}
+	}
+}
+`
+
+func GetPreviousIssues(
+	ctx context.Context,
+	client graphql.Client,
+	lastAmount int,
+	owner string,
+	repoName string,
+	beforeCursor string,
+) (*GetPreviousIssuesResponse, error) {
+	req := &graphql.Request{
+		OpName: "GetPreviousIssues",
+		Query:  GetPreviousIssues_Operation,
+		Variables: &__GetPreviousIssuesInput{
+			LastAmount:   lastAmount,
+			Owner:        owner,
+			RepoName:     repoName,
+			BeforeCursor: beforeCursor,
+		},
+	}
+	var err error
+
+	var data GetPreviousIssuesResponse
 	resp := &graphql.Response{Data: &data}
 
 	err = client.MakeRequest(

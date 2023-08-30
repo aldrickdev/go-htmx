@@ -1,30 +1,41 @@
 {{if .Success}}
-<h3>Issues For Repository: {{.RepositoryName}}</h3>
-<table>
-    <tr>
-        <th>Number</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Labels</th>
-    </tr>
-    {{range .Issues}}
-    <tr>
-        <td>{{.Number}}</td>
-        <td>{{.Title}}</td>
-        <td>{{.Author}}</td>
-        <td>
-            <ul>
-                {{range .Labels}}
-                <ol>{{.}}</ol>
-                {{end}}
-            </ul>
-        </td>
-    </tr>
-    {{end}}
-</table>
-
+<h3>Issues For Repository: {{.Owner}}/{{.RepositoryName}}</h3>
+<div id="results">
+    <table>
+        <tr>
+            <th>Number</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Labels</th>
+        </tr>
+        {{range .Issues}}
+        <tr>
+            <td>{{.Number}}</td>
+            <td>{{.Title}}</td>
+            <td>{{.Author}}</td>
+            <td>
+                <ul>
+                    {{range .Labels}}
+                    <ol>{{.}}</ol>
+                    {{end}}
+                </ul>
+            </td>
+        </tr>
+        {{end}}
+    </table>
+    <div id="pagination">
+        {{if .PreviousPage}}
+        <button hx-get="/previous-issues?owner={{.Owner}}&repoName={{.RepositoryName}}&cursor={{.BeforeCursor}}"
+            hx-target="#results" hx-select="#results">Back</button>
+        {{end}}
+        <span>Page</span>
+        {{if .NextPage}}
+        <button hx-get="/next-issues?owner={{.Owner}}&repoName={{.RepositoryName}}&cursor={{.AfterCursor}}"
+            hx-target="#results" hx-select="#results">Next</button>
+        {{end}}
+    </div>
+</div>
 {{else}}
-
 <h3>Request Failed</h3>
 <p>Please try again with a valid <span>&lt;Owner Name&gt;/&lt;Repository Name&gt;</span> In one of the following
     formats:</p>

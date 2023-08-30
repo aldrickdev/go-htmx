@@ -37,6 +37,8 @@ func main() {
 	g.GET("/", routes.Index)
 	g.GET("/ping", routes.Ping)
 	g.GET("/issues", routes.GetRepoIssues)
+	g.GET("/previous-issues", routes.PreviousIssues)
+	g.GET("/next-issues", routes.NextIssues)
 
 	err := g.Run(PORT)
 	if err != nil {
@@ -52,6 +54,7 @@ func loadTemplates(templateDir string) multitemplate.Renderer {
 	component := fmt.Sprintf("%s%s", templateDir, "/components/issueResults.html")
 
 	r.AddFromFiles("index", baseLayout, content, component)
+	r.AddFromFiles("result", component)
 
 	return r
 }

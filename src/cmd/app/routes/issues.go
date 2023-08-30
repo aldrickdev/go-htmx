@@ -3,22 +3,11 @@ package routes
 import (
 	"context"
 	"fmt"
-	"io"
-	"net/http"
 	"strings"
 
 	"github.com/aldrickdev/go-htmx/cmd/app/api"
 	"github.com/gin-gonic/gin"
 )
-
-func Ping(c *gin.Context) {
-	body, err := io.ReadAll(c.Request.Body)
-	if err != nil {
-		fmt.Printf("Body: %s, Error: %v", string(body), err)
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "pong"})
-}
 
 func extractOwnerRepo(input string) (string, string, error) {
 	splitLink := strings.Split(input, "/")
@@ -47,15 +36,19 @@ func GetRepoIssues(c *gin.Context) {
 		Labels []string
 	}
 	type resultsStruct struct {
+		Owner          string
 		RepositoryName string
 		Issues         []issue
 		RequestMade    bool
 		Success        bool
+		BeforeCursor   string
+		AfterCursor    string
+		NextPage       bool
+		PreviousPage   bool
 	}
 	templateData := resultsStruct{
-		RepositoryName: link,
-		RequestMade:    true,
-		Success:        true,
+		RequestMade: true,
+		Success:     true,
 	}
 
 	owner, repoName, err := extractOwnerRepo(link)
@@ -67,7 +60,7 @@ func GetRepoIssues(c *gin.Context) {
 	}
 
 	gqlClient := api.GetClient()
-	apiData, err := api.GetIssues(context.Background(), gqlClient, owner, repoName, 5, nil)
+	apiData, err := api.GetInitialIssues(context.Background(), gqlClient, 5, owner, repoName)
 	if err != nil {
 		fmt.Println(err)
 		templateData.Success = false
@@ -101,9 +94,12 @@ func GetRepoIssues(c *gin.Context) {
 		)
 	}
 
-	c.HTML(200, "index", templateData)
-}
+	templateData.Owner = owner
+	templateData.RepositoryName = repoName
+	templateData.BeforeCursor = *apiData.Repository.Issues.PageInfo.GetStartCursor()
+	templateData.AfterCursor = *apiData.Repository.Issues.PageInfo.GetEndCursor()
+	templateData.NextPage = apiData.Repository.Issues.PageInfo.HasNextPage
+	templateData.PreviousPage = apiData.Repository.Issues.PageInfo.HasPreviousPage
 
-func Index(c *gin.Context) {
-	c.HTML(200, "index", nil)
+	c.HTML(200, "index", templateData)
 }

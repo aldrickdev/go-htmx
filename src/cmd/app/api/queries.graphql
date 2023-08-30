@@ -24,3 +24,90 @@ query GetIssues($owner: String!, $repoName: String!, $issueAmount: Int!, $lastCu
     }
   }
 }
+
+query GetInitialIssues($firstAmount: Int!, $owner: String!, $repoName: String!){ 
+  repository(owner: $owner, name: $repoName){
+    issues(first: $firstAmount, states: [OPEN], orderBy: {field: CREATED_AT, direction: DESC}){
+      edges{
+        node{
+          title
+          number
+          createdAt
+          author{
+            login
+          }
+          labels(first: 5){
+            nodes{
+              name
+            }
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
+      }
+    }
+  }
+}
+
+query GetNextIssues($firstAmount: Int!, $owner: String!, $repoName: String!, $afterCursor: String!){ 
+  repository(owner: $owner, name: $repoName){
+    issues(first: $firstAmount, after: $afterCursor, states: [OPEN], orderBy: {field: CREATED_AT, direction: DESC}){
+      edges{
+        node{
+          title
+          number
+          createdAt
+          author{
+            login
+          }
+          labels(first: 5){
+            nodes{
+              name
+            }
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
+      }
+    }
+  }
+}
+
+query GetPreviousIssues($lastAmount: Int!, $owner: String!, $repoName: String!, $beforeCursor: String!){ 
+  repository(owner: $owner, name: $repoName){
+    issues(last: $lastAmount, before: $beforeCursor, states: [OPEN], orderBy: {field: CREATED_AT, direction: DESC}){
+      edges{
+        node{
+          title
+          number
+          createdAt
+          author{
+            login
+          }
+          labels(first: 5){
+            nodes{
+              name
+            }
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
+      }
+    }
+  }
+}
