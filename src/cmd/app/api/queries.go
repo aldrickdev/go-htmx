@@ -29,12 +29,19 @@ func (v *GetIssuesRepository) GetIssues() GetIssuesRepositoryIssuesIssueConnecti
 // The connection type for Issue.
 type GetIssuesRepositoryIssuesIssueConnection struct {
 	// A list of edges.
-	Edges []GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge `json:"edges"`
+	Edges []*GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge `json:"edges"`
+	// Information to aid in pagination.
+	PageInfo GetIssuesRepositoryIssuesIssueConnectionPageInfo `json:"pageInfo"`
 }
 
 // GetEdges returns GetIssuesRepositoryIssuesIssueConnection.Edges, and is useful for accessing the field via an interface.
-func (v *GetIssuesRepositoryIssuesIssueConnection) GetEdges() []GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge {
+func (v *GetIssuesRepositoryIssuesIssueConnection) GetEdges() []*GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge {
 	return v.Edges
+}
+
+// GetPageInfo returns GetIssuesRepositoryIssuesIssueConnection.PageInfo, and is useful for accessing the field via an interface.
+func (v *GetIssuesRepositoryIssuesIssueConnection) GetPageInfo() GetIssuesRepositoryIssuesIssueConnectionPageInfo {
+	return v.PageInfo
 }
 
 // GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge includes the requested fields of the GraphQL type IssueEdge.
@@ -43,13 +50,18 @@ func (v *GetIssuesRepositoryIssuesIssueConnection) GetEdges() []GetIssuesReposit
 // An edge in a connection.
 type GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge struct {
 	// The item at the end of the edge.
-	Node GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue `json:"node"`
+	Node *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue `json:"node"`
+	// A cursor for use in pagination.
+	Cursor string `json:"cursor"`
 }
 
 // GetNode returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge.Node, and is useful for accessing the field via an interface.
-func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge) GetNode() GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue {
+func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge) GetNode() *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue {
 	return v.Node
 }
+
+// GetCursor returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge.Cursor, and is useful for accessing the field via an interface.
+func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdge) GetCursor() string { return v.Cursor }
 
 // GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
 // The GraphQL type's documentation follows.
@@ -63,9 +75,9 @@ type GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue struct {
 	// Identifies the date and time when the object was created.
 	CreatedAt time.Time `json:"createdAt"`
 	// The actor who authored the comment.
-	Author GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor `json:"-"`
+	Author *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor `json:"-"`
 	// A list of labels associated with the object.
-	Labels GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection `json:"labels"`
+	Labels *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection `json:"labels"`
 }
 
 // GetTitle returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Title, and is useful for accessing the field via an interface.
@@ -84,12 +96,12 @@ func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetCre
 }
 
 // GetAuthor returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author, and is useful for accessing the field via an interface.
-func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetAuthor() GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor {
+func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetAuthor() *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor {
 	return v.Author
 }
 
 // GetLabels returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Labels, and is useful for accessing the field via an interface.
-func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetLabels() GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection {
+func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) GetLabels() *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection {
 	return v.Labels
 }
 
@@ -115,8 +127,9 @@ func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) Unmars
 		dst := &v.Author
 		src := firstPass.Author
 		if len(src) != 0 && string(src) != "null" {
+			*dst = new(GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor)
 			err = __unmarshalGetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(
-				src, dst)
+				src, *dst)
 			if err != nil {
 				return fmt.Errorf(
 					"unable to unmarshal GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author: %w", err)
@@ -135,7 +148,7 @@ type __premarshalGetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue
 
 	Author json.RawMessage `json:"author"`
 
-	Labels GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection `json:"labels"`
+	Labels *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection `json:"labels"`
 }
 
 func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) MarshalJSON() ([]byte, error) {
@@ -156,12 +169,14 @@ func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) __prem
 
 		dst := &retval.Author
 		src := v.Author
-		var err error
-		*dst, err = __marshalGetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(
-			&src)
-		if err != nil {
-			return nil, fmt.Errorf(
-				"unable to marshal GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author: %w", err)
+		if src != nil {
+			var err error
+			*dst, err = __marshalGetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue.Author: %w", err)
+			}
 		}
 	}
 	retval.Labels = v.Labels
@@ -182,7 +197,7 @@ func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssue) __prem
 type GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor interface {
 	implementsGraphQLInterfaceGetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorActor()
 	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() string
+	GetTypename() *string
 	// GetLogin returns the interface-field "login" from its implementation.
 	// The GraphQL interface field's documentation follows.
 	//
@@ -296,13 +311,13 @@ func __marshalGetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAut
 //
 // A special type of user which takes actions on behalf of GitHub Apps.
 type GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot struct {
-	Typename string `json:"__typename"`
+	Typename *string `json:"__typename"`
 	// The username of the actor.
 	Login string `json:"login"`
 }
 
 // GetTypename returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot.Typename, and is useful for accessing the field via an interface.
-func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) GetTypename() string {
+func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBot) GetTypename() *string {
 	return v.Typename
 }
 
@@ -316,13 +331,13 @@ func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorBo
 //
 // An account for a user who is an admin of an enterprise or a member of an enterprise through one or more organizations.
 type GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount struct {
-	Typename string `json:"__typename"`
+	Typename *string `json:"__typename"`
 	// The username of the actor.
 	Login string `json:"login"`
 }
 
 // GetTypename returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount.Typename, and is useful for accessing the field via an interface.
-func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) GetTypename() string {
+func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEnterpriseUserAccount) GetTypename() *string {
 	return v.Typename
 }
 
@@ -336,13 +351,13 @@ func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorEn
 //
 // A placeholder user for attribution of imported data on GitHub.
 type GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin struct {
-	Typename string `json:"__typename"`
+	Typename *string `json:"__typename"`
 	// The username of the actor.
 	Login string `json:"login"`
 }
 
 // GetTypename returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin.Typename, and is useful for accessing the field via an interface.
-func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) GetTypename() string {
+func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMannequin) GetTypename() *string {
 	return v.Typename
 }
 
@@ -356,13 +371,13 @@ func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorMa
 //
 // An account on GitHub, with one or more owners, that has repositories, members and teams.
 type GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization struct {
-	Typename string `json:"__typename"`
+	Typename *string `json:"__typename"`
 	// The username of the actor.
 	Login string `json:"login"`
 }
 
 // GetTypename returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization.Typename, and is useful for accessing the field via an interface.
-func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) GetTypename() string {
+func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOrganization) GetTypename() *string {
 	return v.Typename
 }
 
@@ -376,13 +391,13 @@ func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorOr
 //
 // A user is an individual's account on GitHub that owns repositories and can make new content.
 type GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser struct {
-	Typename string `json:"__typename"`
+	Typename *string `json:"__typename"`
 	// The username of the actor.
 	Login string `json:"login"`
 }
 
 // GetTypename returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser.Typename, and is useful for accessing the field via an interface.
-func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) GetTypename() string {
+func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUser) GetTypename() *string {
 	return v.Typename
 }
 
@@ -397,11 +412,11 @@ func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueAuthorUs
 // The connection type for Label.
 type GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection struct {
 	// A list of nodes.
-	Nodes []GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel `json:"nodes"`
+	Nodes []*GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel `json:"nodes"`
 }
 
 // GetNodes returns GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection.Nodes, and is useful for accessing the field via an interface.
-func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection) GetNodes() []GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel {
+func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnection) GetNodes() []*GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLabelConnectionNodesLabel {
 	return v.Nodes
 }
 
@@ -419,19 +434,40 @@ func (v *GetIssuesRepositoryIssuesIssueConnectionEdgesIssueEdgeNodeIssueLabelsLa
 	return v.Name
 }
 
+// GetIssuesRepositoryIssuesIssueConnectionPageInfo includes the requested fields of the GraphQL type PageInfo.
+// The GraphQL type's documentation follows.
+//
+// Information about pagination in a connection.
+type GetIssuesRepositoryIssuesIssueConnectionPageInfo struct {
+	// When paginating forwards, the cursor to continue.
+	EndCursor *string `json:"endCursor"`
+	// When paginating forwards, are there more items?
+	HasNextPage bool `json:"hasNextPage"`
+}
+
+// GetEndCursor returns GetIssuesRepositoryIssuesIssueConnectionPageInfo.EndCursor, and is useful for accessing the field via an interface.
+func (v *GetIssuesRepositoryIssuesIssueConnectionPageInfo) GetEndCursor() *string { return v.EndCursor }
+
+// GetHasNextPage returns GetIssuesRepositoryIssuesIssueConnectionPageInfo.HasNextPage, and is useful for accessing the field via an interface.
+func (v *GetIssuesRepositoryIssuesIssueConnectionPageInfo) GetHasNextPage() bool {
+	return v.HasNextPage
+}
+
 // GetIssuesResponse is returned by GetIssues on success.
 type GetIssuesResponse struct {
 	// Lookup a given repository by the owner and repository name.
-	Repository GetIssuesRepository `json:"repository"`
+	Repository *GetIssuesRepository `json:"repository"`
 }
 
 // GetRepository returns GetIssuesResponse.Repository, and is useful for accessing the field via an interface.
-func (v *GetIssuesResponse) GetRepository() GetIssuesRepository { return v.Repository }
+func (v *GetIssuesResponse) GetRepository() *GetIssuesRepository { return v.Repository }
 
 // __GetIssuesInput is used internally by genqlient
 type __GetIssuesInput struct {
-	Owner    string `json:"owner"`
-	RepoName string `json:"repoName"`
+	Owner       string  `json:"owner"`
+	RepoName    string  `json:"repoName"`
+	IssueAmount int     `json:"issueAmount"`
+	LastCursor  *string `json:"lastCursor"`
 }
 
 // GetOwner returns __GetIssuesInput.Owner, and is useful for accessing the field via an interface.
@@ -440,11 +476,17 @@ func (v *__GetIssuesInput) GetOwner() string { return v.Owner }
 // GetRepoName returns __GetIssuesInput.RepoName, and is useful for accessing the field via an interface.
 func (v *__GetIssuesInput) GetRepoName() string { return v.RepoName }
 
+// GetIssueAmount returns __GetIssuesInput.IssueAmount, and is useful for accessing the field via an interface.
+func (v *__GetIssuesInput) GetIssueAmount() int { return v.IssueAmount }
+
+// GetLastCursor returns __GetIssuesInput.LastCursor, and is useful for accessing the field via an interface.
+func (v *__GetIssuesInput) GetLastCursor() *string { return v.LastCursor }
+
 // The query or mutation executed by GetIssues.
 const GetIssues_Operation = `
-query GetIssues ($owner: String!, $repoName: String!) {
+query GetIssues ($owner: String!, $repoName: String!, $issueAmount: Int!, $lastCursor: String) {
 	repository(owner: $owner, name: $repoName) {
-		issues(first: 30, states: [OPEN], orderBy: {field:CREATED_AT,direction:DESC}) {
+		issues(first: $issueAmount, after: $lastCursor, states: [OPEN], orderBy: {field:CREATED_AT,direction:DESC}) {
 			edges {
 				node {
 					title
@@ -460,6 +502,11 @@ query GetIssues ($owner: String!, $repoName: String!) {
 						}
 					}
 				}
+				cursor
+			}
+			pageInfo {
+				endCursor
+				hasNextPage
 			}
 		}
 	}
@@ -471,13 +518,17 @@ func GetIssues(
 	client graphql.Client,
 	owner string,
 	repoName string,
+	issueAmount int,
+	lastCursor *string,
 ) (*GetIssuesResponse, error) {
 	req := &graphql.Request{
 		OpName: "GetIssues",
 		Query:  GetIssues_Operation,
 		Variables: &__GetIssuesInput{
-			Owner:    owner,
-			RepoName: repoName,
+			Owner:       owner,
+			RepoName:    repoName,
+			IssueAmount: issueAmount,
+			LastCursor:  lastCursor,
 		},
 	}
 	var err error

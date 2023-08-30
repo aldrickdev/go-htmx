@@ -8,3 +8,5 @@ package: api
 bindings:
   DateTime:
     type: time.Time
+
+optional: pointer

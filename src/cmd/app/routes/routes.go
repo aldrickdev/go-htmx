@@ -67,7 +67,7 @@ func GetRepoIssues(c *gin.Context) {
 	}
 
 	gqlClient := api.GetClient()
-	apiData, err := api.GetIssues(context.Background(), gqlClient, owner, repoName)
+	apiData, err := api.GetIssues(context.Background(), gqlClient, owner, repoName, 5, nil)
 	if err != nil {
 		fmt.Println(err)
 		templateData.Success = false
@@ -82,7 +82,8 @@ func GetRepoIssues(c *gin.Context) {
 		node := edge.GetNode()
 		Number := fmt.Sprint(node.GetNumber())
 		Title := node.GetTitle()
-		Author := node.GetAuthor().GetLogin()
+		AuthorStruct := *node.GetAuthor()
+		AuthorName := AuthorStruct.GetLogin()
 
 		var Labels []string
 		for _, l := range node.GetLabels().Nodes {
@@ -94,7 +95,7 @@ func GetRepoIssues(c *gin.Context) {
 			issue{
 				Number,
 				Title,
-				Author,
+				AuthorName,
 				Labels,
 			},
 		)
