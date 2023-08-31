@@ -39,6 +39,7 @@ func main() {
 	g.GET("/issues", routes.GetRepoIssues)
 	g.GET("/previous-issues", routes.PreviousIssues)
 	g.GET("/next-issues", routes.NextIssues)
+	g.GET("/redirect", routes.RedirectToIssue)
 
 	err := g.Run(PORT)
 	if err != nil {

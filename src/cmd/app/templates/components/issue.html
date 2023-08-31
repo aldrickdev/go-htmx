@@ -1,8 +1,8 @@
-<tr class="border-b-4 even:bg-gray-100 text-xs m-2">
-    <td>{{.Number}}</td>
+<tr hx-get="/redirect{{.Link}}" class="border-b-4 even:bg-gray-100 text-xs h-8 hover:bg-indigo-300">
+    <td class="hidden sm:table-cell">{{.Number}}</td>
     <td>{{.Title}}</td>
-    <td>{{.Author}}</td>
-    <td>
+    <td class="hidden sm:table-cell">{{.Author}}</td>
+    <td class="hidden sm:table-cell">
         <ul>
             {{range .Labels}}
             <ol>{{.}}</ol>

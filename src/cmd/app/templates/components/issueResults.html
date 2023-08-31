@@ -1,13 +1,13 @@
-{{if .Success}}
 <hr class="mt-3">
+{{if .Success}}
 <h3 class="font-bold text-lg">Issues For Repository: {{.Owner}}/{{.RepositoryName}}</h3>
 <div id="results" class="mt-3">
-    <table>
+    <table class="text-center w-full">
         <tr>
-            <th>Number</th>
+            <th class="hidden sm:table-cell">Number</th>
             <th>Title</th>
-            <th>Author</th>
-            <th>Labels</th>
+            <th class="hidden sm:table-cell">Author</th>
+            <th class="hidden sm:table-cell">Labels</th>
         </tr>
         {{range .Issues}}
         {{template "issue.html" .}}
@@ -31,13 +31,15 @@
     </div>
 </div>
 {{else}}
-<h3>Request Failed</h3>
-<p>You either do not have access to the repository or the repository entered was invalid</p>
-<p>Please try again with a valid <span>&lt;Owner Name&gt;/&lt;Repository Name&gt;</span> In one of the following
-    formats:</p>
-<ol>
-    <li>https://github.com/OwnerName/RepositoryName</li>
-    <li>github.com/OwnerName/RepositoryName</li>
-    <li>OwnerName/RepositoryName</li>
-</ol>
+<h3 class="font-bold text-lg">Request Failed</h3>
+<div class="mt-3">
+    <p>You either do not have access to the repository or the repository entered was invalid</p>
+    <p class="mt-3">Please try again with a valid Owner and Repository in one of the
+        following formats:</p>
+    <ol class="mt-2">
+        <li class="font-extralight list-disc ml-6">https://github.com/OwnerName/RepositoryName</li>
+        <li class="font-extralight list-disc ml-6">github.com/OwnerName/RepositoryName</li>
+        <li class="font-extralight list-disc ml-6">OwnerName/RepositoryName</li>
+    </ol>
+</div>
 {{end}}

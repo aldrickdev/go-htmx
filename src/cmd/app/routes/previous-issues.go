@@ -17,6 +17,7 @@ func PreviousIssues(c *gin.Context) {
 		Number string
 		Title  string
 		Author string
+		Link   string
 		Labels []string
 	}
 	type resultsStruct struct {
@@ -54,6 +55,7 @@ func PreviousIssues(c *gin.Context) {
 		Title := node.GetTitle()
 		AuthorStruct := *node.GetAuthor()
 		AuthorName := AuthorStruct.GetLogin()
+		Link := fmt.Sprintf("?owner=%s&repoName=%s&issueNum=%s", owner, repoName, Number)
 
 		var Labels []string
 		for _, l := range node.GetLabels().Nodes {
@@ -66,6 +68,7 @@ func PreviousIssues(c *gin.Context) {
 				Number,
 				Title,
 				AuthorName,
+				Link,
 				Labels,
 			},
 		)
