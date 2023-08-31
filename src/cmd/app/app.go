@@ -32,7 +32,7 @@ func init() {
 
 func main() {
 	g := gin.Default()
-	g.HTMLRender = loadTemplates("./templates/new")
+	g.HTMLRender = loadTemplates("./templates")
 
 	g.GET("/", routes.Index)
 	g.GET("/ping", routes.Ping)
@@ -51,10 +51,11 @@ func loadTemplates(templateDir string) multitemplate.Renderer {
 
 	baseLayout := fmt.Sprintf("%s%s", templateDir, "/layouts/base.html")
 	content := fmt.Sprintf("%s%s", templateDir, "/content/index.html")
-	component := fmt.Sprintf("%s%s", templateDir, "/components/issueResults.html")
+	resultsComponent := fmt.Sprintf("%s%s", templateDir, "/components/issueResults.html")
+	issueComponent := fmt.Sprintf("%s%s", templateDir, "/components/issue.html")
 
-	r.AddFromFiles("index", baseLayout, content, component)
-	r.AddFromFiles("result", component)
+	r.AddFromFiles("index", baseLayout, content, resultsComponent, issueComponent)
+	r.AddFromFiles("result", resultsComponent, issueComponent)
 
 	return r
 }

@@ -7,14 +7,28 @@
     <script src="https://unpkg.com/htmx.org@1.9.2"
         integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/058b9fe495.js" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
+            }
+        }
+    </script>
     <title>Repo Issues</title>
 </head>
 
-<body hx-boost="true">
+<body hx-boost="true" class="flex flex-col items-center justify-center mt-16 mb-16 bg-gray-200">
     {{template "content" .}}
 </body>
 
 <script defer>
+    // This tells HTMX to still allow swapping even if the response is 400 or 422
     document.body.addEventListener('htmx:beforeSwap', function (evt) {
         if (evt.detail.xhr.status === 422 || evt.detail.xhr.status === 400) {
             evt.detail.shouldSwap = true;

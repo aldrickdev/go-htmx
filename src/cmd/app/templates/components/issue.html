@@ -1,0 +1,12 @@
+<tr class="border-b-4 even:bg-gray-100 text-xs m-2">
+    <td>{{.Number}}</td>
+    <td>{{.Title}}</td>
+    <td>{{.Author}}</td>
+    <td>
+        <ul>
+            {{range .Labels}}
+            <ol>{{.}}</ol>
+            {{end}}
+        </ul>
+    </td>
+</tr>

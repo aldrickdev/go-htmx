@@ -1,0 +1,22 @@
+{{define "content"}}
+<div class="p-6 w-1/2 bg-white rounded drop-shadow-2xl">
+    <form action="/issues" method="get" class="flex flex-col">
+        <legend class="font-bold text-xl text-center">Get Repository Issues</legend>
+        <label class="font-semibold pt-6" for="link">Repository Link</label>
+        <input class="bg-gray-200 rounded p-3" type="text" name="link" placeholder="https://github.com/railwayapp/cli"
+            value="{{if .RepositoryName}}{{.Owner}}/{{.RepositoryName}}{{end}}">
+
+        <button class="text-white font-bold rounded mt-6 py-2 bg-indigo-500 hover:bg-indigo-700 drop-shadow-sm">
+            Search
+        </button>
+        <a class="text-white font-bold rounded text-center mt-3 py-2 bg-pink-300 hover:bg-pink-500 drop-shadow-sm"
+            href="/">Clear</a>
+    </form>
+
+    {{if .RequestMade}}
+    <div>
+        {{template "issueResults.html" .}}
+    </div>
+    {{end}}
+    {{end}}
+</div>
