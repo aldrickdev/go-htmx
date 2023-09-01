@@ -32,7 +32,7 @@ func init() {
 
 func main() {
 	g := gin.Default()
-	g.HTMLRender = loadTemplates("./templates")
+	g.HTMLRender = loadTemplates("./cmd/app/templates")
 
 	g.GET("/", routes.Index)
 	g.GET("/ping", routes.Ping)
