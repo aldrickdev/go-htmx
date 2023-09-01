@@ -14,20 +14,18 @@
         {{end}}
     </table>
     <div id="pagination" class="flex justify-around">
-        {{if .PreviousPage}}
-        <button class="text-white font-bold rounded mt-6 py-2 px-6 bg-pink-300 hover:bg-pink-500 drop-shadow-sm"
+        <button
+            class="{{if not .PreviousPage}}invisible{{end}} text-white font-bold rounded mt-6 py-2 px-6 bg-pink-300 hover:bg-pink-500 drop-shadow-sm"
             hx-get="/previous-issues?owner={{.Owner}}&repoName={{.RepositoryName}}&cursor={{.BeforeCursor}}"
             hx-target="#results" hx-select="#results">
             <i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>
         </button>
-        {{end}}
-        {{if .NextPage}}
-        <button class="text-white font-bold rounded mt-6 py-2 px-6 bg-indigo-500 hover:bg-indigo-700 drop-shadow-sm"
+        <button
+            class="{{if not .NextPage}}invisible{{end}} text-white font-bold rounded mt-6 py-2 px-6 bg-indigo-500 hover:bg-indigo-700 drop-shadow-sm"
             hx-get="/next-issues?owner={{.Owner}}&repoName={{.RepositoryName}}&cursor={{.AfterCursor}}"
             hx-target="#results" hx-select="#results">
             <i class="fa-solid fa-chevron-right" style="color: #ffffff;"></i>
         </button>
-        {{end}}
     </div>
 </div>
 {{else}}

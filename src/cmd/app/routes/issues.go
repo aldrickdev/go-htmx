@@ -101,8 +101,8 @@ func GetRepoIssues(c *gin.Context) {
 	templateData.RepositoryName = repoName
 	templateData.BeforeCursor = *apiData.Repository.Issues.PageInfo.GetStartCursor()
 	templateData.AfterCursor = *apiData.Repository.Issues.PageInfo.GetEndCursor()
-	templateData.NextPage = apiData.Repository.Issues.PageInfo.HasNextPage
-	templateData.PreviousPage = apiData.Repository.Issues.PageInfo.HasPreviousPage
+	templateData.NextPage = apiData.Repository.Issues.PageInfo.GetHasNextPage()
+	templateData.PreviousPage = apiData.Repository.Issues.PageInfo.GetHasPreviousPage()
 
 	c.HTML(200, "index", templateData)
 }
