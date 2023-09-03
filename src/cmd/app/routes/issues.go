@@ -6,6 +6,8 @@ import (
 	"strings"
 
 	"github.com/aldrickdev/go-htmx/cmd/app/api"
+	"github.com/aldrickdev/go-htmx/cmd/app/templates"
+	"github.com/aldrickdev/go-htmx/cmd/app/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,25 +31,8 @@ func GetRepoIssues(c *gin.Context) {
 	// railwayapp/cli
 
 	link := c.Query("link")
-	type issue struct {
-		Number string
-		Title  string
-		Author string
-		Link   string
-		Labels []string
-	}
-	type resultsStruct struct {
-		Owner          string
-		RepositoryName string
-		Issues         []issue
-		RequestMade    bool
-		Success        bool
-		BeforeCursor   string
-		AfterCursor    string
-		NextPage       bool
-		PreviousPage   bool
-	}
-	templateData := resultsStruct{
+
+	templateData := templates.IssueResults{
 		RequestMade: true,
 		Success:     true,
 	}
@@ -59,8 +44,10 @@ func GetRepoIssues(c *gin.Context) {
 		c.HTML(422, "index", templateData)
 		return
 	}
+	templateData.Owner = owner
+	templateData.RepositoryName = repoName
 
-	gqlClient := api.GetClient()
+	gqlClient := api.GetClient(utils.Env.GH_PAT)
 	apiData, err := api.GetInitialIssues(context.Background(), gqlClient, 5, owner, repoName)
 	if err != nil {
 		fmt.Println(err)
@@ -68,41 +55,7 @@ func GetRepoIssues(c *gin.Context) {
 		c.HTML(400, "index", templateData)
 		return
 	}
-	repository := apiData.GetRepository()
-	issues := repository.GetIssues()
-	issueEdges := issues.GetEdges()
-
-	for _, edge := range issueEdges {
-		node := edge.GetNode()
-		Number := fmt.Sprint(node.GetNumber())
-		Title := node.GetTitle()
-		AuthorStruct := *node.GetAuthor()
-		AuthorName := AuthorStruct.GetLogin()
-		Link := fmt.Sprintf("?owner=%s&repoName=%s&issueNum=%s", owner, repoName, Number)
-
-		var Labels []string
-		for _, l := range node.GetLabels().Nodes {
-			Labels = append(Labels, l.GetName())
-		}
-
-		templateData.Issues = append(
-			templateData.Issues,
-			issue{
-				Number,
-				Title,
-				AuthorName,
-				Link,
-				Labels,
-			},
-		)
-	}
-
-	templateData.Owner = owner
-	templateData.RepositoryName = repoName
-	templateData.BeforeCursor = *apiData.Repository.Issues.PageInfo.GetStartCursor()
-	templateData.AfterCursor = *apiData.Repository.Issues.PageInfo.GetEndCursor()
-	templateData.NextPage = apiData.Repository.Issues.PageInfo.GetHasNextPage()
-	templateData.PreviousPage = apiData.Repository.Issues.PageInfo.GetHasPreviousPage()
+	utils.GenerateInitialIssuesTemplateData(&templateData, apiData)
 
 	c.HTML(200, "index", templateData)
 }

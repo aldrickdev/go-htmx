@@ -1,13 +1,16 @@
 # Variables
-MOD_NAME=github.com/aldrickdev/gin_api_template
+MOD_NAME=github.com/aldrickdev/go-htmx
 
 # Basic Commands
 build:
-	go build -C cmd/app
+	go build -C cmd/app -buildvcs=false
 	mv cmd/app/app ./
 
-run: build
+run-build: build
 	./app
+
+run:
+	go run cmd/app/app.go
 
 init:
 	go mod init $(MOD_NAME)

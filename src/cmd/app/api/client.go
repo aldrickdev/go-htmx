@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/Khan/genqlient/graphql"
-	"github.com/aldrickdev/go-htmx/cmd/app/utils"
 )
 
 type githubPATRoundTripper struct {
@@ -20,12 +19,12 @@ func (g githubPATRoundTripper) RoundTrip(r *http.Request) (*http.Response, error
 	return g.next.RoundTrip(r)
 }
 
-func GetClient() graphql.Client {
+func GetClient(ghPat string) graphql.Client {
 
 	baseClient := http.DefaultClient
 	baseClient.Transport = &githubPATRoundTripper{
 		next:      http.DefaultTransport,
-		githubPAT: utils.Env.GH_PAT,
+		githubPAT: ghPat,
 	}
 
 	return graphql.NewClient("https://api.github.com/graphql", baseClient)
