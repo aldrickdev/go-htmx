@@ -12,6 +12,17 @@ func GenerateInitialIssuesTemplateData(templateData *templates.IssueResults, api
 	issues := repository.GetIssues()
 	issueEdges := issues.GetEdges()
 
+	if len(issueEdges) == 0 {
+		templateData.Issues = nil
+
+		templateData.BeforeCursor = ""
+		templateData.AfterCursor = ""
+		templateData.NextPage = false
+		templateData.PreviousPage = false
+
+		return
+	}
+
 	for _, edge := range issueEdges {
 		node := edge.GetNode()
 		Number := fmt.Sprint(node.GetNumber())
