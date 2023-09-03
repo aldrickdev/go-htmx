@@ -16,6 +16,7 @@ func NextIssues(c *gin.Context) {
 	cursor := c.Query("cursor")
 
 	templateData := templates.IssueResults{
+		Owner:          owner,
 		RepositoryName: repoName,
 		RequestMade:    true,
 		Success:        true,
