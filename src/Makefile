@@ -1,10 +1,10 @@
 # Variables
 MOD_NAME=github.com/aldrickdev/go-htmx
+binary=$(PWD)/main
 
 # Basic Commands
 build:
-	go build -C cmd/app -buildvcs=false
-	mv cmd/app/app ./
+	go build -C cmd/app -o $(binary) -buildvcs=false 
 
 run-build: build
 	./app
