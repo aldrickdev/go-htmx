@@ -1,0 +1,12 @@
+{{define "content"}}
+<form action="/setup" method="post" class="flex flex-col">
+    <legend class="font-bold text-xl text-center">Provide a Github PAT</legend>
+    <label class="font-semibold pt-6" for="link">Github PAT</label>
+    <input class="bg-gray-200 rounded p-3" type="text" name="gh_pat" placeholder="">
+
+    <button class="text-white font-bold rounded mt-6 py-2 bg-indigo-500 hover:bg-indigo-700 drop-shadow-sm">
+        Submit
+        <i id="indicator" class="htmx-indicator fa-solid fa-gear fa-spin"></i>
+    </button>
+</form>
+{{end}}

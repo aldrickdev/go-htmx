@@ -13,23 +13,29 @@ const (
 	TemplateLocation = "./cmd/app/templates/"
 
 	LayoutLocation     = "layouts/"
-	ContentLocation    = "pages/"
+	ContentLocation    = "content/"
 	ComponentsLocation = "components/"
 
+	BaseLayout       = "base.html"
 	IndexContent     = "index.html"
+	SetupContent     = "setup.html"
 	ResultsComponent = "results.html"
 	IssueComponent   = "issue.html"
 )
 
-func LoadTemplates(templateDir string) multitemplate.Renderer {
+func LoadTemplates() multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
 
-	baseLayout := fmt.Sprintf("%s%s", templateDir, "/layouts/base.html")
-	content := fmt.Sprintf("%s%s", templateDir, "/content/index.html")
-	resultsComponent := fmt.Sprintf("%s%s", templateDir, "/components/issueResults.html")
-	issueComponent := fmt.Sprintf("%s%s", templateDir, "/components/issue.html")
+	baseLayout := fmt.Sprintf("%s%s%s", TemplateLocation, LayoutLocation, BaseLayout)
 
-	r.AddFromFiles("index", baseLayout, content, resultsComponent, issueComponent)
+	indexContent := fmt.Sprintf("%s%s%s", TemplateLocation, ContentLocation, IndexContent)
+	setupContent := fmt.Sprintf("%s%s%s", TemplateLocation, ContentLocation, SetupContent)
+
+	resultsComponent := fmt.Sprintf("%s%s%s", TemplateLocation, ComponentsLocation, ResultsComponent)
+	issueComponent := fmt.Sprintf("%s%s%s", TemplateLocation, ComponentsLocation, IssueComponent)
+
+	r.AddFromFiles("index", baseLayout, indexContent, resultsComponent, issueComponent)
+	r.AddFromFiles("setup", baseLayout, setupContent)
 	r.AddFromFiles("result", resultsComponent, issueComponent)
 
 	return r
