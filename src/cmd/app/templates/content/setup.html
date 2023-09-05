@@ -1,12 +1,14 @@
 {{define "content"}}
-<form action="/setup" method="post" class="flex flex-col">
-    <legend class="font-bold text-xl text-center">Provide a Github PAT</legend>
-    <label class="font-semibold pt-6" for="link">Github PAT</label>
-    <input class="bg-gray-200 rounded p-3" type="text" name="gh_pat" placeholder="">
+<div class="p-6 w-4/5 bg-white rounded drop-shadow-2xl">
+    <form action="/setup" method="post" class="flex flex-col">
+        <legend class="font-bold text-xl text-center">Provide a Github PAT</legend>
+        <label class="font-semibold pt-6" for="gh_pat">Github PAT</label>
+        <input class="bg-gray-200 rounded p-3" type="text" name="gh_pat" placeholder="github_pat_xxx">
 
-    <button class="text-white font-bold rounded mt-6 py-2 bg-indigo-500 hover:bg-indigo-700 drop-shadow-sm">
-        Submit
-        <i id="indicator" class="htmx-indicator fa-solid fa-gear fa-spin"></i>
-    </button>
-</form>
+        <button class="text-white font-bold rounded mt-6 py-2 bg-indigo-500 hover:bg-indigo-700 drop-shadow-sm">
+            Submit
+            <i id="indicator" class="htmx-indicator fa-solid fa-gear fa-spin"></i>
+        </button>
+    </form>
+</div>
 {{end}}

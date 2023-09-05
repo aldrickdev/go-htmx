@@ -16,11 +16,11 @@ const (
 	ContentLocation    = "content/"
 	ComponentsLocation = "components/"
 
-	BaseLayout       = "base.html"
-	IndexContent     = "index.html"
-	SetupContent     = "setup.html"
-	ResultsComponent = "results.html"
-	IssueComponent   = "issue.html"
+	BaseLayout            = "base.html"
+	IndexContent          = "index.html"
+	SetupContent          = "setup.html"
+	IssueResultsComponent = "issueResults.html"
+	IssueComponent        = "issue.html"
 )
 
 func LoadTemplates() multitemplate.Renderer {
@@ -31,7 +31,7 @@ func LoadTemplates() multitemplate.Renderer {
 	indexContent := fmt.Sprintf("%s%s%s", TemplateLocation, ContentLocation, IndexContent)
 	setupContent := fmt.Sprintf("%s%s%s", TemplateLocation, ContentLocation, SetupContent)
 
-	resultsComponent := fmt.Sprintf("%s%s%s", TemplateLocation, ComponentsLocation, ResultsComponent)
+	resultsComponent := fmt.Sprintf("%s%s%s", TemplateLocation, ComponentsLocation, IssueResultsComponent)
 	issueComponent := fmt.Sprintf("%s%s%s", TemplateLocation, ComponentsLocation, IssueComponent)
 
 	r.AddFromFiles("index", baseLayout, indexContent, resultsComponent, issueComponent)

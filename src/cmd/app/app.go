@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/aldrickdev/go-htmx/cmd/app/routes"
+	"github.com/aldrickdev/go-htmx/cmd/app/templates"
 	"github.com/aldrickdev/go-htmx/cmd/app/utils"
-	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
 )
 
@@ -32,9 +30,11 @@ func init() {
 
 func main() {
 	g := gin.Default()
-	g.HTMLRender = loadTemplates("./cmd/app/templates")
+	g.HTMLRender = templates.LoadTemplates()
 
 	g.GET("/", routes.Index)
+	g.GET("/setup", routes.Setup)
+	g.POST("/setup", routes.Configure)
 	g.GET("/ping", routes.Ping)
 	g.GET("/issues", routes.GetRepoIssues)
 	g.GET("/previous-issues", routes.PreviousIssues)
@@ -45,18 +45,4 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func loadTemplates(templateDir string) multitemplate.Renderer {
-	r := multitemplate.NewRenderer()
-
-	baseLayout := fmt.Sprintf("%s%s", templateDir, "/layouts/base.html")
-	content := fmt.Sprintf("%s%s", templateDir, "/content/index.html")
-	resultsComponent := fmt.Sprintf("%s%s", templateDir, "/components/issueResults.html")
-	issueComponent := fmt.Sprintf("%s%s", templateDir, "/components/issue.html")
-
-	r.AddFromFiles("index", baseLayout, content, resultsComponent, issueComponent)
-	r.AddFromFiles("result", resultsComponent, issueComponent)
-
-	return r
 }
