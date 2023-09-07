@@ -5,8 +5,12 @@ import (
 )
 
 func Configure(c *gin.Context) {
-	gh_pat := c.Query("gh_pat")
+	ghpat, found := c.GetPostForm("ghpat")
+	if !found {
+		c.HTML(200, "setup", nil)
+		return
+	}
 
-	c.SetCookie("github_issues_app", gh_pat)
-	c.HTML(200, "index", nil)
+	c.SetCookie("github_issues_app", ghpat, 0, "/", "", true, true)
+	c.Header("HX-Redirect", "/")
 }
