@@ -11,6 +11,7 @@ services:
       - ENV=${ENV}
       - PORT=${PORT}
       - GH_PAT=${GH_PAT}
+      - JWT_SIGNING_KEY=${JWT_SIGNING_KEY}
 
     volumes:
       - ..:/workspaces:cached
