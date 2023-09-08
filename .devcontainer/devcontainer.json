@@ -12,6 +12,10 @@
 	// "forwardPorts": [], vscode forwards the ports automatically anyways
     // List of available features: https://github.com/devcontainers/features/tree/main/src
 	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "18"
+		},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
 	"customizations": {
 		"vscode": {
@@ -23,6 +27,6 @@
 		}
 	},
 	// ===
-	"postCreateCommand": "echo 'Hello devcontainer'"
+	"postCreateCommand": "./.devcontainer/postCreate.sh"
 }
 
