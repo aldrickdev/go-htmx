@@ -18,10 +18,6 @@ func init() {
 
 	ENV = utils.Env.ENV
 	PORT = utils.Env.PORT
-	GH_PAT = utils.Env.GH_PAT
-	if GH_PAT == "" {
-		panic("No Github PAT provided")
-	}
 
 	if ENV == "PROD" {
 		gin.SetMode(gin.ReleaseMode)

@@ -10,7 +10,7 @@ import (
 var ApplicationTemplates *template.Template
 
 const (
-	TemplateLocation = "./cmd/app/templates/"
+	TemplateLocation = "./templates/"
 
 	LayoutLocation     = "layouts/"
 	ContentLocation    = "content/"
