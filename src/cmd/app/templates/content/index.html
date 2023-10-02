@@ -6,6 +6,9 @@
         <input class="bg-gray-200 rounded p-3" type="text" name="link" placeholder="https://github.com/railwayapp/cli"
             value="{{if .RepositoryName}}{{.Owner}}/{{.RepositoryName}}{{end}}">
 
+        <a class="text-white font-bold rounded text-center mt-3 py-2 bg-gray-300 hover:bg-gray-500 drop-shadow-sm"
+            href="/setup">Back</a>
+
         <button class="text-white font-bold rounded mt-6 py-2 bg-indigo-500 hover:bg-indigo-700 drop-shadow-sm">
             Search
             <i id="indicator" class="htmx-indicator fa-solid fa-gear fa-spin"></i>

@@ -1,16 +1,21 @@
 package templates
 
 import (
+	"embed"
 	"fmt"
 	"html/template"
+	"io/fs"
+	"log"
 
 	"github.com/gin-contrib/multitemplate"
 )
 
-var ApplicationTemplates *template.Template
+var (
+	ApplicationTemplates *template.Template
+)
 
 const (
-	TemplateLocation = "./templates/"
+	TemplateLocation = "templates/"
 
 	LayoutLocation     = "layouts/"
 	ContentLocation    = "content/"
@@ -23,7 +28,7 @@ const (
 	IssueComponent        = "issue.html"
 )
 
-func LoadTemplates() multitemplate.Renderer {
+func LoadTemplates(filesystem embed.FS) multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
 
 	baseLayout := fmt.Sprintf("%s%s%s", TemplateLocation, LayoutLocation, BaseLayout)
@@ -34,11 +39,28 @@ func LoadTemplates() multitemplate.Renderer {
 	resultsComponent := fmt.Sprintf("%s%s%s", TemplateLocation, ComponentsLocation, IssueResultsComponent)
 	issueComponent := fmt.Sprintf("%s%s%s", TemplateLocation, ComponentsLocation, IssueComponent)
 
-	r.AddFromFiles("index", baseLayout, indexContent, resultsComponent, issueComponent)
-	r.AddFromFiles("setup", baseLayout, setupContent)
-	r.AddFromFiles("result", resultsComponent, issueComponent)
+	r.Add(createTemplate(filesystem, "index", baseLayout, indexContent, resultsComponent, issueComponent))
+	r.Add(createTemplate(filesystem, "setup", baseLayout, setupContent))
+	r.Add(createTemplate(filesystem, "result", resultsComponent, issueComponent))
 
 	return r
+}
+
+func createTemplate(filesystem embed.FS, name string, base string, files ...string) (string, *template.Template) {
+	newTemplate := template.New(name)
+
+	data, err := fs.ReadFile(filesystem, base)
+	if err != nil {
+		log.Fatal("Problem Reading File:", err)
+	}
+
+	template.Must(newTemplate.Parse(string(data)))
+
+	if files != nil {
+		template.Must(newTemplate.ParseFS(filesystem, files...))
+	}
+
+	return name, newTemplate
 }
 
 type Index struct {

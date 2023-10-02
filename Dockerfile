@@ -11,5 +11,4 @@ RUN apk add gcompat
 
 WORKDIR /project
 COPY --from=Builder /project/main .
-COPY --from=Builder /project/cmd/app/templates /project/templates
 EXPOSE 4001

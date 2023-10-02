@@ -1,6 +1,8 @@
 package main
 
 import (
+	"embed"
+
 	"github.com/aldrickdev/go-htmx/cmd/app/routes"
 	"github.com/aldrickdev/go-htmx/cmd/app/templates"
 	"github.com/aldrickdev/go-htmx/cmd/app/utils"
@@ -11,6 +13,9 @@ var (
 	ENV    string
 	PORT   string
 	GH_PAT string
+
+	//go:embed templates/*
+	localFS embed.FS
 )
 
 func init() {
@@ -26,7 +31,7 @@ func init() {
 
 func main() {
 	g := gin.Default()
-	g.HTMLRender = templates.LoadTemplates()
+	g.HTMLRender = templates.LoadTemplates(localFS)
 
 	g.GET("/", routes.Index)
 	g.GET("/setup", routes.Setup)

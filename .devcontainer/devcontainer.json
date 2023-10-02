@@ -1,32 +1,34 @@
 {
-	// "name": "",
-	//
-	// devcontainer Build Configuration ===
-	"dockerComposeFile": "compose.yaml",
-	"service": "htmx_go",
-	"workspaceFolder": "/workspaces",
-	// ===
-	//
-	// devcontainer Environment Configuration ===
-	"remoteUser": "vscode",
-	// "forwardPorts": [], vscode forwards the ports automatically anyways
-    // List of available features: https://github.com/devcontainers/features/tree/main/src
-	"features": {
-		"ghcr.io/devcontainers/features/node:1": {
-			"version": "18"
-		},
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"rangav.vscode-thunder-client",
-				"otovo-oss.htmx-tags"
-			],
-			"settings": {}
-		}
-	},
-	// ===
-	"postCreateCommand": "./.devcontainer/postCreate.sh"
-}
+  // "name": "",
+  //
+  // devcontainer Build Configuration ===
+  "dockerComposeFile": "compose.yaml",
+  "service": "htmx_go",
+  "workspaceFolder": "/workspaces",
+  // ===
+  //
+  // devcontainer Environment Configuration ===
+  "remoteUser": "vscode",
+  // "forwardPorts": [], vscode forwards the ports automatically anyways
+  // List of available features: https://github.com/devcontainers/features/tree/main/src
+  "features": {
+    // "ghcr.io/devcontainers/features/node:1": {
+    //   "version": "18"
+    // }
 
+    // https://taskfile.dev/
+    "ghcr.io/eitsupi/devcontainer-features/go-task:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+		"rangav.vscode-thunder-client",
+		"otovo-oss.htmx-tags",
+		"bradlc.vscode-tailwindcss"
+	],
+      "settings": {}
+    }
+  },
+  // ===
+  "postCreateCommand": "./.devcontainer/postCreate.sh"
+}
