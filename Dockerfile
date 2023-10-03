@@ -12,3 +12,5 @@ RUN apk add gcompat
 WORKDIR /project
 COPY --from=Builder /project/main .
 EXPOSE 4001
+
+CMD ./main
